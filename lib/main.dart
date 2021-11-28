@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:perce/Screens/Login/login_screen.dart';
-import 'package:perce/Screens/Routing/route_generator.dart';
+import 'package:hive/hive.dart';
+import 'package:perce/Routing/route_generator.dart';
+import "package:hive_flutter/hive_flutter.dart";
 
-void main() {
+import 'Hive/transaction.dart';
+
+Future<void> main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
   runApp(MyApp());
 }
 
