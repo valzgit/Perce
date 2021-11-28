@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/robotoText.dart';
 import 'package:perce/Components/perceButton.dart';
-import 'package:perce/Components/perceHiperlink.dart';
-import 'package:perce/Components/perceToggleButton.dart';
 import 'package:perce/Components/textFieldInput.dart';
 
-class RegistrationScreen extends StatelessWidget {
+class EditUserDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
@@ -18,7 +16,7 @@ class RegistrationScreen extends StatelessWidget {
         decoration: BoxDecoration(
             image: DecorationImage(
                 fit:BoxFit.cover,
-                image: AssetImage("assets/images/login_background.jpg")
+                image: AssetImage("assets/images/novi_main_screen.jpg")
             )
         ),
         child: Form(
@@ -31,14 +29,6 @@ class RegistrationScreen extends StatelessWidget {
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  PerceToggleButton(
-                    text1: 'KUPAC',
-                    text2: 'PRODAVAC',
-                    firstChoice: true,
-                  ),
-                  SizedBox(
-                    height: height,
-                  ),
                   Container(
                     width: 5 * unit,
                     child: Row(
@@ -165,34 +155,6 @@ class RegistrationScreen extends StatelessWidget {
                   Container(
                     width: 5 * unit,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        RobotoText(
-                          displayText: "Korisničko ime:",
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        TextFieldInput(
-                          hintText: "Unesi korisničko ime",
-                          obscureText: false,
-                          width: 5 * unit / 2,
-                          validator: (value){
-                            if(value.isEmpty){
-                              return "Unesi korisničko ime";
-                            }
-                            return null;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: height,
-                  ),
-                  Container(
-                    width: 5 * unit,
-                    child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           RobotoText(
@@ -219,13 +181,13 @@ class RegistrationScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: height,
+                    height: height*2,
                   ),
                   PerceButton(
                     color1: Color(0xFF133069),
                     color2: Color(0xFF133069),
                     color3: Color(0xFF133069),
-                    text: 'REGISTRUJ SE',
+                    text: 'SAČUVAJ IZMENE',
                     function: (){
                       if(_formKey.currentState.validate()){
 
@@ -233,16 +195,7 @@ class RegistrationScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(
-                    height: 80,
-                  ),
-                  PerceHyperlink(
-                    text: "Imaš nalog? Prijavi se ovde!",
-                    function: (){
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  SizedBox(
-                    height: 60,
+                    height: 160,
                   ),
                 ],
               ),

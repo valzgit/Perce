@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:perce/Screens/EditUserData/editUserData.dart';
 import 'package:perce/Screens/Login/login_screen.dart';
 import 'package:perce/Screens/Registration/registration_screen.dart';
 
@@ -12,6 +13,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => LogInScreen());
       case '/registration':
         return MaterialPageRoute(builder: (_) => RegistrationScreen());
+      case '/changeuserdata':
+        return MaterialPageRoute(builder: (_) => EditUserDataScreen());
       default:
         return _errorRoute();
 

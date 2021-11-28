@@ -7,7 +7,9 @@ import 'Hive/transaction.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
+
   Hive.registerAdapter(UserAdapter());
+  await Hive.openBox<User>("users");
   runApp(MyApp());
 }
 

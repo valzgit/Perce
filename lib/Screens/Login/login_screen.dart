@@ -92,10 +92,10 @@ class LogInScreen extends StatelessWidget {
                     color1: Color(0xFF133069),
                     color2: Color(0xFF133069),
                     color3: Color(0xFF133069),
-                    text: 'Prijavi se',
+                    text: 'PRIJAVI SE',
                     function: (){
                       if(_formKey.currentState.validate()){
-
+                        Navigator.of(context).pushNamed("/changeuserdata");
                       }
                     },
                   ),
