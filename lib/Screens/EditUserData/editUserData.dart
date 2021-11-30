@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/robotoText.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/textFieldInput.dart';
+import 'package:perce/Hive/boxes.dart';
+import 'package:perce/Hive/transaction.dart';
 
 class EditUserDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    LoggedUser loggedUser = Boxes.loggedUser().get("logged");
+    print("USAOOOOOOOOOOOO");
     final _formKey = GlobalKey<FormState>();
     Size size = MediaQuery.of(context).size;
     double unit = size.width/12;
@@ -43,11 +47,13 @@ class EditUserDataScreen extends StatelessWidget {
                         TextFieldInput(
                           hintText: "Unesi ime",
                           obscureText: false,
+                          initalValue: loggedUser==null?"":loggedUser.name,
                           width: 5 * unit / 2,
                           validator: (value){
                             if(value.isEmpty){
                               return "Unesi ime";
                             }
+                            loggedUser.name = value;
                             return null;
                           },
                         ),
@@ -72,10 +78,12 @@ class EditUserDataScreen extends StatelessWidget {
                           hintText: "Unesi prezime",
                           obscureText: false,
                           width: 5 * unit / 2,
+                          initalValue: loggedUser==null?"":loggedUser.lastName,
                           validator: (value){
                             if(value.isEmpty){
                               return "Unesi prezime";
                             }
+                            loggedUser.lastName = value;
                             return null;
                           },
                         ),
@@ -100,6 +108,7 @@ class EditUserDataScreen extends StatelessWidget {
                           hintText: "Unesi adresu",
                           obscureText: false,
                           width: 5 * unit / 2,
+                          initalValue: loggedUser==null?"":loggedUser.email,
                           validator: (value){
                             if(value.isEmpty){
                               return "Unesi email adresu";
@@ -107,6 +116,7 @@ class EditUserDataScreen extends StatelessWidget {
                             if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)){
                               return "Adresa je u lošem formatu";
                             }
+                            loggedUser.email = value;
                             return null;
                           },
                         ),
@@ -131,6 +141,7 @@ class EditUserDataScreen extends StatelessWidget {
                           hintText: "Unesi kontakt telefon",
                           obscureText: false,
                           width: 5 * unit / 2,
+                          initalValue: loggedUser==null?"":loggedUser.phoneNumber,
                           validator: (value){
                             bool isNumeric = true;
                             if(value == null) {
@@ -143,6 +154,7 @@ class EditUserDataScreen extends StatelessWidget {
                             if(value.isEmpty || !isNumeric){
                               return "Broj telefona nije u dobrom formatu";
                             }
+                            loggedUser.phoneNumber = value;
                             return null;
                           },
                         ),
@@ -167,6 +179,7 @@ class EditUserDataScreen extends StatelessWidget {
                             hintText: "Unesi lozinku",
                             obscureText: true,
                             width: 5 * unit / 2,
+                            initalValue: loggedUser==null?"":loggedUser.password,
                             validator: (value){
                               if(value.isEmpty){
                                 return "Unesi lozinku";
@@ -174,6 +187,7 @@ class EditUserDataScreen extends StatelessWidget {
                               if(!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)){
                                 return "Lozinka je u lošem formatu";
                               }
+                              loggedUser.password = value;
                               return null;
                             },
                           )
@@ -190,7 +204,20 @@ class EditUserDataScreen extends StatelessWidget {
                     text: 'SAČUVAJ IZMENE',
                     function: (){
                       if(_formKey.currentState.validate()){
-
+                        String userName = loggedUser.userName;
+                        final loggedUserBox = Boxes.loggedUser();
+                        final userBox = Boxes.getUsers();
+                        User user = User()
+                          ..name = loggedUser.name
+                          ..phoneNumber = loggedUser.phoneNumber
+                          ..email = loggedUser.email
+                          ..password = loggedUser.password
+                          ..userName = loggedUser.userName
+                          ..lastName = loggedUser.lastName
+                          ..buyer = loggedUser.buyer;
+                        userBox.put(userName, user);
+                        loggedUserBox.put("logged", loggedUser);
+                        Navigator.of(context).pop();
                       }
                     },
                   ),

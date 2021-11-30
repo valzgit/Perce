@@ -9,7 +9,9 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(LoggedUserAdapter());
   await Hive.openBox<User>("users");
+  await Hive.openBox<LoggedUser>("loggedUser");
   runApp(MyApp());
 }
 

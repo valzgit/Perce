@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/textfieldcontainer.dart';
 
 class TextFieldInput extends StatelessWidget {
+  final String initalValue;
   final String hintText;
   final bool obscureText;
   final double width;
@@ -13,7 +14,8 @@ class TextFieldInput extends StatelessWidget {
     this.hintText,
     this.obscureText,
     this.width,
-    this.validator
+    this.validator,
+    this.initalValue
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class TextFieldInput extends StatelessWidget {
           hintText: hintText,
         ),
         validator: validator,
+        initialValue: initalValue==null?"":initalValue,
       ),
     );
   }

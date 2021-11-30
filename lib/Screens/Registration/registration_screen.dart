@@ -4,23 +4,28 @@ import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/perceHiperlink.dart';
 import 'package:perce/Components/perceToggleButton.dart';
 import 'package:perce/Components/textFieldInput.dart';
+import 'package:perce/Hive/boxes.dart';
+import 'package:perce/Hive/transaction.dart';
 
 class RegistrationScreen extends StatelessWidget {
+  String name;
+  String lastName;
+  String email;
+  String phoneNumber;
+  String userName;
+  String password;
+  bool buyer = true;
+
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
     Size size = MediaQuery.of(context).size;
-    double unit = size.width/12;
+    double unit = size.width / 12;
     double height = 10;
     return Scaffold(
       body: Container(
         width: size.width,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                fit:BoxFit.cover,
-                image: AssetImage("assets/images/login_background.jpg")
-            )
-        ),
+        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/login_background.jpg"))),
         child: Form(
           key: _formKey,
           child: Row(
@@ -34,7 +39,7 @@ class RegistrationScreen extends StatelessWidget {
                   PerceToggleButton(
                     text1: 'KUPAC',
                     text2: 'PRODAVAC',
-                    firstChoice: true,
+                    firstChoice: buyer,
                   ),
                   SizedBox(
                     height: height,
@@ -54,10 +59,11 @@ class RegistrationScreen extends StatelessWidget {
                           hintText: "Unesi ime",
                           obscureText: false,
                           width: 5 * unit / 2,
-                          validator: (value){
-                            if(value.isEmpty){
+                          validator: (value) {
+                            if (value.isEmpty) {
                               return "Unesi ime";
                             }
+                            name = value;
                             return null;
                           },
                         ),
@@ -82,10 +88,11 @@ class RegistrationScreen extends StatelessWidget {
                           hintText: "Unesi prezime",
                           obscureText: false,
                           width: 5 * unit / 2,
-                          validator: (value){
-                            if(value.isEmpty){
+                          validator: (value) {
+                            if (value.isEmpty) {
                               return "Unesi prezime";
                             }
+                            lastName = value;
                             return null;
                           },
                         ),
@@ -110,13 +117,14 @@ class RegistrationScreen extends StatelessWidget {
                           hintText: "Unesi adresu",
                           obscureText: false,
                           width: 5 * unit / 2,
-                          validator: (value){
-                            if(value.isEmpty){
+                          validator: (value) {
+                            if (value.isEmpty) {
                               return "Unesi email adresu";
                             }
-                            if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)){
+                            if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
                               return "Adresa je u lošem formatu";
                             }
+                            email = value;
                             return null;
                           },
                         ),
@@ -141,18 +149,19 @@ class RegistrationScreen extends StatelessWidget {
                           hintText: "Unesi kontakt telefon",
                           obscureText: false,
                           width: 5 * unit / 2,
-                          validator: (value){
+                          validator: (value) {
                             bool isNumeric = true;
-                            if(value == null) {
+                            if (value == null) {
                               isNumeric = false;
-                            }
-                            else isNumeric = double.parse(value, (e) => null) != null;
-                            if(value.isEmpty){
+                            } else
+                              isNumeric = double.parse(value, (e) => null) != null;
+                            if (value.isEmpty) {
                               return "Unesi broj telefona";
                             }
-                            if(value.isEmpty || !isNumeric){
+                            if (value.isEmpty || !isNumeric) {
                               return "Broj telefona nije u dobrom formatu";
                             }
+                            phoneNumber = value;
                             return null;
                           },
                         ),
@@ -177,10 +186,14 @@ class RegistrationScreen extends StatelessWidget {
                           hintText: "Unesi korisničko ime",
                           obscureText: false,
                           width: 5 * unit / 2,
-                          validator: (value){
-                            if(value.isEmpty){
+                          validator: (value) {
+                            if (value.isEmpty) {
                               return "Unesi korisničko ime";
                             }
+                            final box = Boxes.getUsers();
+                            if(box.containsKey(value)) return "Korisničko ime se već koristi...";
+
+                            userName = value;
                             return null;
                           },
                         ),
@@ -192,31 +205,29 @@ class RegistrationScreen extends StatelessWidget {
                   ),
                   Container(
                     width: 5 * unit,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          RobotoText(
-                            displayText: "Lozinka:",
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          TextFieldInput(
-                            hintText: "Unesi lozinku",
-                            obscureText: true,
-                            width: 5 * unit / 2,
-                            validator: (value){
-                              if(value.isEmpty){
-                                return "Unesi lozinku";
-                              }
-                              if(!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)){
-                                return "Lozinka je u lošem formatu";
-                              }
-                              return null;
-                            },
-                          )
-                        ]
-                    ),
+                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                      RobotoText(
+                        displayText: "Lozinka:",
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      TextFieldInput(
+                        hintText: "Unesi lozinku",
+                        obscureText: true,
+                        width: 5 * unit / 2,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return "Unesi lozinku";
+                          }
+                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                            return "Lozinka je u lošem formatu";
+                          }
+                          password = value;
+                          return null;
+                        },
+                      )
+                    ]),
                   ),
                   SizedBox(
                     height: height,
@@ -226,9 +237,29 @@ class RegistrationScreen extends StatelessWidget {
                     color2: Color(0xFF133069),
                     color3: Color(0xFF133069),
                     text: 'REGISTRUJ SE',
-                    function: (){
-                      if(_formKey.currentState.validate()){
-
+                    function: () {
+                      if (_formKey.currentState.validate()) {
+                        final box = Boxes.getUsers();
+                        final user = User()
+                          ..name = name
+                          ..password = password
+                          ..lastName = lastName
+                          ..userName = userName
+                          ..phoneNumber = phoneNumber
+                          ..email = email
+                          ..buyer = buyer;
+                        box.put(userName, user);
+                        final loggedUserBox = Boxes.loggedUser();
+                        LoggedUser loggedUserCopy = LoggedUser()
+                          ..name = user.name
+                          ..phoneNumber = user.phoneNumber
+                          ..email = user.email
+                          ..password = user.password
+                          ..userName = user.userName
+                          ..lastName = user.lastName
+                          ..buyer = user.buyer;
+                        loggedUserBox.put("logged", loggedUserCopy);
+                        Navigator.of(context).popAndPushNamed("/changeuserdata");
                       }
                     },
                   ),
@@ -237,7 +268,7 @@ class RegistrationScreen extends StatelessWidget {
                   ),
                   PerceHyperlink(
                     text: "Imaš nalog? Prijavi se ovde!",
-                    function: (){
+                    function: () {
                       Navigator.of(context).pop();
                     },
                   ),
@@ -256,4 +287,3 @@ class RegistrationScreen extends StatelessWidget {
     );
   }
 }
-
