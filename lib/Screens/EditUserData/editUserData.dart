@@ -9,7 +9,6 @@ class EditUserDataScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
-    print("USAOOOOOOOOOOOO");
     final _formKey = GlobalKey<FormState>();
     Size size = MediaQuery.of(context).size;
     double unit = size.width/12;

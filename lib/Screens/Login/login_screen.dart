@@ -115,7 +115,7 @@ class LogInScreen extends StatelessWidget {
                           ..buyer = loggedUser.buyer;
                         loggedUserBox.put("logged", loggedUserCopy);
                         // TODO : Fix username and password being saved when comming back to login screen
-                        Navigator.of(context).pushNamed("/changeuserdata");
+                        Navigator.of(context).pushNamed("/buyermain");
                       }
                     },
                   ),

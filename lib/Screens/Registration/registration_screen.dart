@@ -259,7 +259,7 @@ class RegistrationScreen extends StatelessWidget {
                           ..lastName = user.lastName
                           ..buyer = user.buyer;
                         loggedUserBox.put("logged", loggedUserCopy);
-                        Navigator.of(context).popAndPushNamed("/changeuserdata");
+                        Navigator.of(context).popAndPushNamed("/buyermain");
                       }
                     },
                   ),
