@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
-import 'package:perce/Components/Basic/robotoText.dart';
+import 'package:perce/Components/bookimage.dart';
 import 'package:perce/Components/perceButton.dart';
-import 'package:perce/Components/perceHiperlink.dart';
-import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
@@ -13,7 +11,7 @@ class BuyerMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
     Size size = MediaQuery.of(context).size;
-    double unit = size.width / 12;
+    double unit = size.height / 12;
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -46,24 +44,38 @@ class BuyerMainScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               showDialog(
-                  context: context,
-                  builder: (_) => CupertinoAlertDialog(
-                        actions: [
-                          CupertinoDialogAction(
-                            child: const CinzelText(displayText: "IZMENI NALOG"),
-                            onPressed: () {
-                              Navigator.of(context).popAndPushNamed("/changeuserdata");
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            child: const CinzelText(displayText: "NAPUSTI NALOG"),
-                            isDestructiveAction: true,
-                            onPressed: () {
-                              Navigator.of(context).pushNamed("/");
-                            },
-                          )
-                        ],
-                      ));
+                context: context,
+                builder: (_) => AlertDialog(
+                  actions: [
+                    Column(
+                      children: [
+                        SizedBox(height: 7),
+                        PerceButton(
+                          color1: Color(0xFF136945),
+                          color2: Color(0xFF136945),
+                          color3: Color(0xFF136945),
+                          text: 'IZMENI NALOG',
+                          function: () {
+                            Navigator.of(context).popAndPushNamed("/changeuserdata");
+                          },
+                        ),
+                        SizedBox(height: 12),
+                        PerceButton(
+                          color1: Color(0xFF0E1926),
+                          color2: Color(0xFF0E1926),
+                          color3: Color(0xFF0E1926),
+                          text: 'NAPUSTI NALOG',
+                          function: () {
+                            Navigator.of(context).popAndPushNamed("/");
+                          },
+                        ),
+                        SizedBox(height: 7)
+                      ],
+                    ),
+                  ],
+                  backgroundColor: Color(0xFFF9F6F0),
+                ),
+              );
             },
             child: Container(
               width: 55,
@@ -79,18 +91,113 @@ class BuyerMainScreen extends StatelessWidget {
       body: Container(
         width: size.width,
         decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/novi_main_screen.jpg"))),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: 3 * unit,
+              height: unit / 2,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [],
+            Row(
+              children: [
+                SizedBox(
+                  width: 70,
+                ),
+                CinzelText(
+                  displayText: "PREPORUČENE KNJIGE",
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
             ),
             SizedBox(
-              width: 4 * unit,
+              height: 35,
             ),
+            Row(
+              children: [
+                BookImage(
+                  imagename: "harrypotter.png",
+                  marginLeft: 80,
+                ),
+                BookImage(imagename: "hariputer.png"),
+                BookImage(imagename: "crimeandpunishment.png"),
+              ],
+            ),
+            SizedBox(
+              height: unit / 2,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 70,
+                ),
+                CinzelText(
+                  displayText: "KNJIGE NA PROMOCIJI",
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            Row(
+              children: [
+                BookImage(
+                  imagename: "littleprince.jpg",
+                  marginLeft: 80,
+                ),
+                BookImage(imagename: "pinkhobbit.png"),
+                BookImage(imagename: "anakarenjina.jpg"),
+                BookImage(imagename: "cuprija.png"),
+              ],
+            ),
+            SizedBox(
+              height: unit / 2,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 70,
+                ),
+                CinzelText(
+                  displayText: "SVE KNJIGE",
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 35,
+            ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  BookImage(
+                    imagename: "stivenhoking.jpg",
+                    marginLeft: 80,
+                  ),
+                  BookImage(imagename: "batman.png"),
+                  BookImage(imagename: "cicagorio.jpg"),
+                  BookImage(imagename: "divergence.png"),
+                  BookImage(imagename: "musketari.png"),
+                  BookImage(imagename: "umbertoeco.png"),
+                  BookImage(imagename: "staracimore.jpg"),
+                  BookImage(imagename: "bracakaramazovi.jpg"),
+                  SizedBox(width: 80),
+                  InkWell(
+                    child: Container(
+                      width: 80,
+                      height: 70,
+                      decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/arrow.png"))),
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed("/allbooks");
+                    },
+                  )
+                ],
+              ),
+            )
           ],
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:perce/Screens/AllBooks/allBooks.dart';
 import 'package:perce/Screens/BuyerMain/buyerMain.dart';
 import 'package:perce/Screens/EditUserData/editUserData.dart';
 import 'package:perce/Screens/Login/login_screen.dart';
@@ -18,6 +19,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => EditUserDataScreen());
       case '/buyermain':
         return MaterialPageRoute(builder: (_) => BuyerMainScreen());
+      case '/allbooks':
+        return MaterialPageRoute(builder: (_) => AllBooksScreen());
       default:
         return _errorRoute();
 
