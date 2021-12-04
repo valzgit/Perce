@@ -66,33 +66,36 @@ class LogInScreen extends StatelessWidget {
                   ),
                   Container(
                     width: 5 * unit,
-                    child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-                      RobotoText(
-                        displayText: "Lozinka:",
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      TextFieldInput(
-                        hintText: "Unesi lozinku",
-                        obscureText: true,
-                        width: 5 * unit / 2,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return "Unesi lozinku";
-                          }
-                          if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
-                            return "Lozinka je u lošem formatu";
-                          }
-                          if (checkPassword == false) return null;
-                          if (loggedUser == null) {
-                            return "Password se nije dohvatio ( los redosled zvanja funkcije validate() )!";
-                          }
-                          if (loggedUser.password != value) return "Pogrešna lozinka";
-                          return null;
-                        },
-                      )
-                    ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        RobotoText(
+                          displayText: "Lozinka:",
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        TextFieldInput(
+                          hintText: "Unesi lozinku",
+                          obscureText: true,
+                          width: 5 * unit / 2,
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return "Unesi lozinku";
+                            }
+                            if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                              return "Lozinka je u lošem formatu";
+                            }
+                            if (checkPassword == false) return null;
+                            if (loggedUser == null) {
+                              return "Password se nije dohvatio ( los redosled zvanja funkcije validate() )!";
+                            }
+                            if (loggedUser.password != value) return "Pogrešna lozinka";
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 20,

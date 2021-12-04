@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/perceButton.dart';
+import 'package:perce/Components/perceCheckBox.dart';
+import 'package:perce/Components/perceDropdownButton.dart';
+import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
@@ -9,6 +12,7 @@ class AllBooksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
+    bool checkBoxValue = false;
     Size size = MediaQuery.of(context).size;
     double unit = size.height / 12;
     return Scaffold(
@@ -91,7 +95,84 @@ class AllBooksScreen extends StatelessWidget {
         width: size.width,
         decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
         child: Column(
-          children: [],
+          children: [
+            SizedBox(
+              height: unit / 3,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 40,
+                ),
+                CinzelText(
+                  displayText: "SVE KNJIGE",
+                  fontSize: 48,
+                  color: Color(0xFF000000),
+                ),
+                SizedBox(
+                  width: 300,
+                ),
+                CinzelText(
+                  displayText: "ŽANR:",
+                  fontSize: 24,
+                  color: Color(0xFF000000),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                PerceDropdownButton(),
+                SizedBox(
+                  width: 40,
+                ),
+                CinzelText(
+                  displayText: "PROMOCIJA:",
+                  fontSize: 24,
+                  color: Color(0xFF000000),
+                ),
+                PerceCheckBox(),
+                SizedBox(
+                  width: 40,
+                ),
+                CinzelText(
+                  displayText: "PRETRAŽI:",
+                  fontSize: 24,
+                  color: Color(0xFF000000),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                TextFieldInput(
+                  hintText: "Unesi knjigu ili pisca",
+                  obscureText: false,
+                  width: 2.5 * size.width / 24,
+                  validator: (value) {
+                    return null;
+                  },
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                  onTap: () {
+
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/lupa.png"))),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              width: size.width,
+              height: 4,
+              color: Color(0xFF000000),
+            )
+          ],
         ),
       ),
     );

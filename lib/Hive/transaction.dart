@@ -49,3 +49,15 @@ class LoggedUser extends HiveObject{
   @HiveField(6)
   bool buyer;
 }
+
+@HiveType(typeId:2)
+class Book extends HiveObject{
+  @HiveField(0)
+  String name;
+
+  @HiveField(1)
+  String writer;
+
+  @HiveField(2)
+  String bookUrl;
+}

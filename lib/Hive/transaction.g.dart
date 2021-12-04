@@ -107,3 +107,42 @@ class LoggedUserAdapter extends TypeAdapter<LoggedUser> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class BookAdapter extends TypeAdapter<Book> {
+  @override
+  final int typeId = 2;
+
+  @override
+  Book read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return Book()
+      ..name = fields[0] as String
+      ..writer = fields[1] as String
+      ..bookUrl = fields[2] as String;
+  }
+
+  @override
+  void write(BinaryWriter writer, Book obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.writer)
+      ..writeByte(2)
+      ..write(obj.bookUrl);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BookAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

@@ -5,11 +5,14 @@ class CinzelText extends StatelessWidget {
   final String displayText;
   final FontWeight fontWeight;
   final double fontSize;
+  final Color color;
+
   const CinzelText({
     Key key,
     this.displayText,
     this.fontWeight,
-    this.fontSize
+    this.fontSize,
+    this.color
   }) : super(key: key);
 
   @override
@@ -17,7 +20,7 @@ class CinzelText extends StatelessWidget {
     return Text(
       displayText,
       style: TextStyle(
-        color: Colors.white,
+        color: color==null ? Colors.white : color,
         fontWeight: fontWeight,
         fontSize: fontSize==null? 30 : fontSize,
         fontFamily: 'Cinzel',
