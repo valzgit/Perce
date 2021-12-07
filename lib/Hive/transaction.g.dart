@@ -146,3 +146,42 @@ class BookAdapter extends TypeAdapter<Book> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class UserBookRelationAdapter extends TypeAdapter<UserBookRelation> {
+  @override
+  final int typeId = 3;
+
+  @override
+  UserBookRelation read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return UserBookRelation()
+      ..username = fields[0] as String
+      ..bookUrl = fields[1] as String
+      ..recommended = fields[2] as bool;
+  }
+
+  @override
+  void write(BinaryWriter writer, UserBookRelation obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.username)
+      ..writeByte(1)
+      ..write(obj.bookUrl)
+      ..writeByte(2)
+      ..write(obj.recommended);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserBookRelationAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

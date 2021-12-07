@@ -35,7 +35,7 @@ Future<void> main() async {
     ..buyer = true;
   List<Book> bookList = new List<Book>();
   bookList.add(Book()
-    ..name = "Zločin i kazna"
+    ..name = "Zlocin i kazna"
     ..writer = "Fjodor Dostojevski"
     ..bookUrl = "crimeandpunishment.png");
   bookList.add(Book()
@@ -47,16 +47,16 @@ Future<void> main() async {
     ..writer = "Bob Kejn"
     ..bookUrl = "batman.png");
   bookList.add(Book()
-    ..name = "Braća Karamazovi"
+    ..name = "Braca Karamazovi"
     ..writer = "Fjodor Dostojevski"
     ..bookUrl = "bracakaramazovi.jpg");
   bookList.add(Book()
-    ..name = "Čiča Gorio"
+    ..name = "Cica Gorio"
     ..writer = "Onore de Balzak"
     ..bookUrl = "cicagorio.jpg");
   bookList.add(Book()
-    ..name = "Na Drini ćuprija"
-    ..writer = "Ivo Andrić"
+    ..name = "Na Drini cuprija"
+    ..writer = "Ivo Andric"
     ..bookUrl = "cuprija.png");
   bookList.add(Book()
     ..name = "Divergence"
@@ -72,7 +72,7 @@ Future<void> main() async {
     ..bookUrl = "harrypotter.png");
   bookList.add(Book()
     ..name = "Hobit"
-    ..writer = "Dž. R. R. Tolkin"
+    ..writer = "Dz. R. R. Tolkin"
     ..bookUrl = "hobbit.png");
   bookList.add(Book()
     ..name = "Mali princ"
@@ -91,12 +91,12 @@ Future<void> main() async {
     ..writer = "Stiven Hoking"
     ..bookUrl = "stivenhoking.jpg");
   bookList.add(Book()
-    ..name = "Praško groblje"
+    ..name = "Prasko groblje"
     ..writer = "Umberto Eko"
     ..bookUrl = "umbertoeco.png");
   box.put("user", buyer);
   box.put("prod", seller);
-  bookList.forEach((element) {shelf.put(element.name, element);});
+  bookList.forEach((element) {shelf.put(element.bookUrl, element);});
   runApp(MyApp());
 }
 

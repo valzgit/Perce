@@ -61,3 +61,13 @@ class Book extends HiveObject{
   @HiveField(2)
   String bookUrl;
 }
+
+@HiveType(typeId:3)
+class UserBookRelation extends HiveObject{
+  @HiveField(0)
+  String username;
+  @HiveField(1)
+  String bookUrl;
+  @HiveField(2)
+  bool recommended;
+}

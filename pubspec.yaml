@@ -35,6 +35,7 @@ dependencies:
   build_runner: ^2.1.5
   xml: ^5.3.1
   hive_flutter: ^1.1.0
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
