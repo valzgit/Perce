@@ -60,6 +60,9 @@ class Book extends HiveObject{
 
   @HiveField(2)
   String bookUrl;
+
+  @HiveField(3)
+  bool promoted;
 }
 
 @HiveType(typeId:3)
@@ -67,7 +70,5 @@ class UserBookRelation extends HiveObject{
   @HiveField(0)
   String username;
   @HiveField(1)
-  String bookUrl;
-  @HiveField(2)
-  bool recommended;
+  List<String> bookUrls;
 }

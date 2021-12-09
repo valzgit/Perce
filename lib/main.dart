@@ -12,10 +12,12 @@ Future<void> main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(LoggedUserAdapter());
   Hive.registerAdapter(BookAdapter());
+  Hive.registerAdapter(UserBookRelationAdapter());
   await Hive.openBox<User>("users");
   await Hive.openBox<LoggedUser>("loggedUser");
   await Hive.openBox<Book>("books");
-  final box = Boxes.getUsers();
+  await Hive.openBox<UserBookRelation>("userbookrelations");
+  final usersBox = Boxes.getUsers();
   final shelf = Boxes.getBooks();
   final buyer = User()
     ..name = "user"
@@ -37,66 +39,89 @@ Future<void> main() async {
   bookList.add(Book()
     ..name = "Zlocin i kazna"
     ..writer = "Fjodor Dostojevski"
-    ..bookUrl = "crimeandpunishment.png");
+    ..bookUrl = "crimeandpunishment.png"
+    ..promoted = true);
   bookList.add(Book()
     ..name = "Ana Karenjina"
     ..writer = "Lav Tolstoj"
-    ..bookUrl = "anakarenjina.jpg");
+    ..bookUrl = "anakarenjina.jpg"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Betmen"
     ..writer = "Bob Kejn"
-    ..bookUrl = "batman.png");
+    ..bookUrl = "batman.png"
+    ..promoted = true);
   bookList.add(Book()
     ..name = "Braca Karamazovi"
     ..writer = "Fjodor Dostojevski"
-    ..bookUrl = "bracakaramazovi.jpg");
+    ..bookUrl = "bracakaramazovi.jpg"
+    ..promoted = true);
   bookList.add(Book()
     ..name = "Cica Gorio"
     ..writer = "Onore de Balzak"
-    ..bookUrl = "cicagorio.jpg");
+    ..bookUrl = "cicagorio.jpg"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Na Drini cuprija"
     ..writer = "Ivo Andric"
-    ..bookUrl = "cuprija.png");
+    ..bookUrl = "cuprija.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Divergence"
     ..writer = ""
-    ..bookUrl = "divergence.png");
+    ..bookUrl = "divergence.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Hari Poter i kamen mudrosti"
     ..writer = "J.K. Roulng"
-    ..bookUrl = "hariputer.png");
+    ..bookUrl = "hariputer.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Hari Poter i relikvije smrti"
     ..writer = "J. K. Roulng"
-    ..bookUrl = "harrypotter.png");
+    ..bookUrl = "harrypotter.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Hobit"
     ..writer = "Dz. R. R. Tolkin"
-    ..bookUrl = "hobbit.png");
+    ..bookUrl = "hobbit.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Mali princ"
     ..writer = "Sant de Sent Egziperi"
-    ..bookUrl = "littleprince.jpg");
+    ..bookUrl = "littleprince.jpg"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Tri musketara"
     ..writer = "Aleksandar Dima"
-    ..bookUrl = "musketari.png");
+    ..bookUrl = "musketari.png"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Starac i more"
     ..writer = "Ernest Hemingvej"
-    ..bookUrl = "staracimore.jpg");
+    ..bookUrl = "staracimore.jpg"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Teorija svega"
     ..writer = "Stiven Hoking"
-    ..bookUrl = "stivenhoking.jpg");
+    ..bookUrl = "stivenhoking.jpg"
+    ..promoted = false);
   bookList.add(Book()
     ..name = "Prasko groblje"
     ..writer = "Umberto Eko"
-    ..bookUrl = "umbertoeco.png");
-  box.put("user", buyer);
-  box.put("prod", seller);
-  bookList.forEach((element) {shelf.put(element.bookUrl, element);});
+    ..bookUrl = "umbertoeco.png"
+    ..promoted = false);
+  usersBox.put("user", buyer);
+  usersBox.put("prod", seller);
+  bookList.forEach((element) {
+    shelf.put(element.bookUrl, element);
+  });
+  final relations = Boxes.getUserBookRelations();
+  relations.put(
+      "user",
+      UserBookRelation()
+        ..username = "user"
+        ..bookUrls = ["umbertoeco.png", "littleprince.jpg"]);
   runApp(MyApp());
 }
 

@@ -10,6 +10,57 @@ class BuyerMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
+    UserBookRelation userBookRelation = Boxes.getUserBookRelations().get(loggedUser.userName);
+    List<Widget> recommendedBooks = [];
+    for (int i = 0; i < userBookRelation.bookUrls.length; ++i) {
+      if (i == 0) {
+        recommendedBooks.add(BookImage(
+          imagename: userBookRelation.bookUrls[i],
+          marginLeft: 80,
+        ));
+      } else {
+        recommendedBooks.add(BookImage(
+          imagename: userBookRelation.bookUrls[i],
+        ));
+      }
+    }
+    List<Widget> allBooks = [];
+    List<Widget> allPromotedBooks = [];
+    int promotedCounter=0;
+    for (int i = 0; i < Boxes.getBooks().length && i < 8; ++i) {
+      Book book = Boxes.getBooks().getAt(i);
+      if(book.promoted){
+        if(promotedCounter==0){
+          allPromotedBooks.add(BookImage(
+            imagename: book.bookUrl,
+            marginLeft: 80,
+          ));
+        }
+        else{
+          allPromotedBooks.add(BookImage(
+            imagename: book.bookUrl,
+          ));
+        }
+      }
+      if (i == 0)
+        allBooks.add(BookImage(
+          imagename: book.bookUrl,
+          marginLeft: 80,
+        ));
+      else
+        allBooks.add(BookImage(imagename: book.bookUrl));
+    }
+    allBooks.add(InkWell(
+      child: Container(
+        width: 80,
+        height: 70,
+        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/arrow.png"))),
+      ),
+      onTap: () {
+        Navigator.of(context).pushNamed("/allbooks");
+      },
+    ));
+
     Size size = MediaQuery.of(context).size;
     double unit = size.height / 12;
     return Scaffold(
@@ -113,14 +164,7 @@ class BuyerMainScreen extends StatelessWidget {
               height: 35,
             ),
             Row(
-              children: [
-                BookImage(
-                  imagename: "harrypotter.png",
-                  marginLeft: 80,
-                ),
-                BookImage(imagename: "hariputer.png"),
-                BookImage(imagename: "crimeandpunishment.png"),
-              ],
+              children: recommendedBooks,
             ),
             SizedBox(
               height: unit / 2,
@@ -141,15 +185,7 @@ class BuyerMainScreen extends StatelessWidget {
               height: 35,
             ),
             Row(
-              children: [
-                BookImage(
-                  imagename: "littleprince.jpg",
-                  marginLeft: 80,
-                ),
-                BookImage(imagename: "pinkhobbit.png"),
-                BookImage(imagename: "anakarenjina.jpg"),
-                BookImage(imagename: "cuprija.png"),
-              ],
+              children: allPromotedBooks,
             ),
             SizedBox(
               height: unit / 2,
@@ -172,30 +208,7 @@ class BuyerMainScreen extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
-                children: [
-                  BookImage(
-                    imagename: "stivenhoking.jpg",
-                    marginLeft: 80,
-                  ),
-                  BookImage(imagename: "batman.png"),
-                  BookImage(imagename: "cicagorio.jpg"),
-                  BookImage(imagename: "divergence.png"),
-                  BookImage(imagename: "musketari.png"),
-                  BookImage(imagename: "umbertoeco.png"),
-                  BookImage(imagename: "staracimore.jpg"),
-                  BookImage(imagename: "bracakaramazovi.jpg"),
-                  SizedBox(width: 80),
-                  InkWell(
-                    child: Container(
-                      width: 80,
-                      height: 70,
-                      decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/arrow.png"))),
-                    ),
-                    onTap: () {
-                      Navigator.of(context).pushNamed("/allbooks");
-                    },
-                  )
-                ],
+                children: allBooks,
               ),
             )
           ],
