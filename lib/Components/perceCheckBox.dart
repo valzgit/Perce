@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class PerceCheckBox extends StatefulWidget {
-  const PerceCheckBox({Key key}) : super(key: key);
+  final Function function;
+  final bool isChecked;
+  const PerceCheckBox({Key key,this.function, this.isChecked}) : super(key: key);
 
   @override
   _PerceCheckBoxState createState() => _PerceCheckBoxState();
@@ -10,6 +12,7 @@ class PerceCheckBox extends StatefulWidget {
 
 class _PerceCheckBoxState extends State<PerceCheckBox> {
   bool isChecked = false;
+  bool firstTime = true;
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.selected
@@ -22,12 +25,14 @@ class _PerceCheckBoxState extends State<PerceCheckBox> {
 
   @override
   Widget build(BuildContext context) {
+    if(firstTime && widget.isChecked!=null && widget.isChecked==true){firstTime = false; isChecked=true;}
     return Container(
       child: Checkbox(
         checkColor: Colors.white,
         fillColor: MaterialStateProperty.resolveWith(getColor),
         value: isChecked,
         onChanged: (bool value) {
+          widget.function();
           setState(
             () {
               isChecked = value;

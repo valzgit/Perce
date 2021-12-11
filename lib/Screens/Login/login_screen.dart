@@ -121,7 +121,7 @@ class LogInScreen extends StatelessWidget {
                         if(loggedUserCopy.buyer==true)
                           Navigator.of(context).pushNamed("/buyermain");
                         else{
-                          Navigator.of(context).pushNamed("/allbooks");
+                          Navigator.of(context).pushNamed("/allbooksprodavac");
                         }
                       }
                     },

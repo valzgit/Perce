@@ -191,7 +191,7 @@ class RegistrationScreen extends StatelessWidget {
                               return "Unesi korisničko ime";
                             }
                             final box = Boxes.getUsers();
-                            if(box.containsKey(value)) return "Korisničko ime se već koristi...";
+                            if (box.containsKey(value)) return "Korisničko ime se već koristi...";
 
                             userName = value;
                             return null;
@@ -259,7 +259,10 @@ class RegistrationScreen extends StatelessWidget {
                           ..lastName = user.lastName
                           ..buyer = user.buyer;
                         loggedUserBox.put("logged", loggedUserCopy);
-                        Navigator.of(context).popAndPushNamed("/buyermain");
+                        if (loggedUserCopy.buyer)
+                          Navigator.of(context).popAndPushNamed("/buyermain");
+                        else
+                          Navigator.of(context).popAndPushNamed("/allbooksprodavac");
                       }
                     },
                   ),

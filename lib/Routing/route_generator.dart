@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:perce/Screens/AllBooks/allBooks.dart';
+import 'package:perce/Screens/AllBooks/statefulAllBooks.dart';
+import 'package:perce/Screens/AllBooks/statefulAllBooksProdavac.dart';
 import 'package:perce/Screens/BuyerMain/buyerMain.dart';
 import 'package:perce/Screens/EditUserData/editUserData.dart';
 import 'package:perce/Screens/Login/login_screen.dart';
@@ -20,7 +21,9 @@ class RouteGenerator {
       case '/buyermain':
         return MaterialPageRoute(builder: (_) => BuyerMainScreen());
       case '/allbooks':
-        return MaterialPageRoute(builder: (_) => AllBooksScreen());
+        return MaterialPageRoute(builder: (_) => StatefulAllBooksScreen());
+      case '/allbooksprodavac':
+        return MaterialPageRoute(builder: (_) => StatefulAllBooksProdavacScreen());
       default:
         return _errorRoute();
 

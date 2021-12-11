@@ -73,12 +73,12 @@ Future<void> main() async {
     ..promoted = false);
   bookList.add(Book()
     ..name = "Hari Poter i kamen mudrosti"
-    ..writer = "J.K. Roulng"
+    ..writer = "J.K. Rouling"
     ..bookUrl = "hariputer.png"
     ..promoted = false);
   bookList.add(Book()
     ..name = "Hari Poter i relikvije smrti"
-    ..writer = "J. K. Roulng"
+    ..writer = "J. K. Rouling"
     ..bookUrl = "harrypotter.png"
     ..promoted = false);
   bookList.add(Book()
