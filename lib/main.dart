@@ -34,7 +34,7 @@ Future<void> main() async {
     ..userName = "prod"
     ..phoneNumber = "46265262356"
     ..email = "prod@prod.com"
-    ..buyer = true;
+    ..buyer = false;
   List<Book> bookList = new List<Book>();
   bookList.add(Book()
     ..name = "Zlocin i kazna"

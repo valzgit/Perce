@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
+import 'package:perce/Components/allBooksBook.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/perceCheckBox.dart';
 import 'package:perce/Components/perceDropdownButton.dart';
@@ -12,9 +13,17 @@ class AllBooksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
-    bool checkBoxValue = false;
     Size size = MediaQuery.of(context).size;
     double unit = size.height / 12;
+    List<Widget> allBooks = [];
+    for (int i = 0; i < Boxes.getBooks().length; ++i) {
+      Book book = Boxes.getBooks().getAt(i);
+      allBooks.add(AllBooksBook(
+        imageUrl: book.bookUrl,
+        bookName: book.name,
+        writerName: book.writer,
+      ));
+    }
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -171,6 +180,14 @@ class AllBooksScreen extends StatelessWidget {
               width: size.width,
               height: 4,
               color: Color(0xFF000000),
+            ),
+            Container(
+              height: size.height-15-40-130,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: allBooks,
+                ),
+              ),
             )
           ],
         ),
