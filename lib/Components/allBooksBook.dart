@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookclickableimage.dart';
@@ -59,7 +58,10 @@ class AllBooksBook extends StatelessWidget {
                 ..promoted = book.promoted
                 ..bookUrl = book.bookUrl
                 ..writer = book.writer
-                ..name = book.name;
+                ..name = book.name
+                ..pageNumber = book.pageNumber
+                ..details = book.details
+                ..placeYear = book.placeYear;
               Boxes.getStoredBooks().put(loggedUser.userName, storedBook);
               Navigator.of(context).pushNamed("/storedbook");
             },

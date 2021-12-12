@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/allBooksBook.dart';
@@ -23,7 +22,6 @@ class _StatefulAllBooksScreenState extends State<StatefulAllBooksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    LoggedUser loggedUser = Boxes.loggedUser().get("logged");
     Size size = MediaQuery.of(context).size;
     double unit = size.height / 12;
     List<Widget> allBooks = [];

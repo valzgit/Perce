@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookImage.dart';
+import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
@@ -92,24 +92,63 @@ class BookDetailsPage extends StatelessWidget {
         ],
       ),
       body: Container(
-          width: size.width,
-          decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
-          child: Column(
-            children: [
-              Container(
-                height: 100,
-              ),
-              Row(
-                children: [
-                  BookImage(
-                    imageUrl: storedBook.bookUrl,
-                    height: 460,
-                    width: 320,
-                  )
-                ],
-              )
-            ],
-          )
+        width: size.width,
+        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
+        child: Column(
+          children: [
+            Container(
+              height: 70,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                BookImage(
+                  imageUrl: storedBook.bookUrl,
+                  height: 455,
+                  width: 300,
+                ),
+                SizedBox(
+                  width: 150,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CinzelText(
+                      displayText: storedBook.name,
+                      color: Colors.black,
+                      fontSize: 45,
+                    ),
+                    Row(children: [
+                      CinzelText(
+                        displayText: storedBook.writer,
+                        color: Colors.black,
+                        fontSize: 45,
+                      ),
+                      SizedBox(width: 120,),
+                      CinzelText(
+                        displayText: storedBook.placeYear,
+                        color: Colors.black,
+                        fontSize: 35,
+                      ),
+                    ]),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Container(
+                      height: 355,
+                      width: 1000,
+                      child: CinzelAutoSizeText(
+                        displayText: storedBook.details,
+                        fontSize: 25,
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

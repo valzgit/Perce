@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooks.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooksProdavac.dart';
@@ -10,7 +9,7 @@ import 'package:perce/Screens/Registration/registration_screen.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings){
-    final args = settings.arguments;
+   // final args = settings.arguments;
 
     switch(settings.name){
       case '/':

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
@@ -32,7 +31,10 @@ class BookClickableImage extends StatelessWidget {
           ..promoted = book.promoted
           ..bookUrl = book.bookUrl
           ..writer = book.writer
-          ..name = book.name;
+          ..name = book.name
+          ..pageNumber = book.pageNumber
+          ..details = book.details
+          ..placeYear = book.placeYear;
         Boxes.getStoredBooks().put(loggedUser.userName, storedBook);
         Navigator.of(context).pushNamed("/storedbook");
       },

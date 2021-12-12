@@ -63,6 +63,15 @@ class Book extends HiveObject{
 
   @HiveField(3)
   bool promoted;
+
+  @HiveField(4)
+  String details;
+
+  @HiveField(5)
+  int pageNumber;
+
+  @HiveField(6)
+  String placeYear;
 }
 
 @HiveType(typeId:3)
@@ -86,4 +95,13 @@ class StoredBook extends HiveObject{
 
   @HiveField(3)
   bool promoted;
+
+  @HiveField(4)
+  String details;
+
+  @HiveField(5)
+  int pageNumber;
+
+  @HiveField(6)
+  String placeYear;
 }
