@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
-import 'package:perce/Components/bookimage.dart';
+import 'package:perce/Components/bookclickableimage.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
@@ -14,13 +14,13 @@ class BuyerMainScreen extends StatelessWidget {
     List<Widget> recommendedBooks = [];
     for (int i = 0; i < userBookRelation.bookUrls.length; ++i) {
       if (i == 0) {
-        recommendedBooks.add(BookImage(
-          imagename: userBookRelation.bookUrls[i],
+        recommendedBooks.add(BookClickableImage(
+          imageUrl: userBookRelation.bookUrls[i],
           marginLeft: 80,
         ));
       } else {
-        recommendedBooks.add(BookImage(
-          imagename: userBookRelation.bookUrls[i],
+        recommendedBooks.add(BookClickableImage(
+          imageUrl: userBookRelation.bookUrls[i],
         ));
       }
     }
@@ -31,24 +31,24 @@ class BuyerMainScreen extends StatelessWidget {
       Book book = Boxes.getBooks().getAt(i);
       if(book.promoted){
         if(promotedCounter==0){
-          allPromotedBooks.add(BookImage(
-            imagename: book.bookUrl,
+          allPromotedBooks.add(BookClickableImage(
+            imageUrl: book.bookUrl,
             marginLeft: 80,
           ));
         }
         else{
-          allPromotedBooks.add(BookImage(
-            imagename: book.bookUrl,
+          allPromotedBooks.add(BookClickableImage(
+            imageUrl: book.bookUrl,
           ));
         }
       }
       if (i == 0)
-        allBooks.add(BookImage(
-          imagename: book.bookUrl,
+        allBooks.add(BookClickableImage(
+          imageUrl: book.bookUrl,
           marginLeft: 80,
         ));
       else
-        allBooks.add(BookImage(imagename: book.bookUrl));
+        allBooks.add(BookClickableImage(imageUrl: book.bookUrl));
     }
     allBooks.add(InkWell(
       child: Container(

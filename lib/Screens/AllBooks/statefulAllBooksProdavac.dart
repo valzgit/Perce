@@ -30,18 +30,13 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
     for (int i = 0; i < Boxes.getBooks().length; ++i) {
       Book book = Boxes.getBooks().getAt(i);
       if ((promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
-        allBooks.add(AllBooksBookProdavac(
-          imageUrl: book.bookUrl,
-          bookName: book.name,
-          writerName: book.writer,
-          promoted: book.promoted,
-        ));
+        allBooks.add(AllBooksBookProdavac(book: book));
     }
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
           onTap: () {
-            Navigator.of(context).pushNamed("/buyermain");
+            //placebo
           },
           child: Container(
             width: 230,

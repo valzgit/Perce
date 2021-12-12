@@ -1,19 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
-import 'package:perce/Components/bookimage.dart';
+import 'package:perce/Components/bookclickableimage.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/perceCheckBox.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
 class AllBooksBookProdavac extends StatelessWidget {
-  final String imageUrl;
-  final String writerName;
-  final String bookName;
-  final bool promoted;
+  final Book book;
 
-  const AllBooksBookProdavac({Key key, this.imageUrl, this.bookName, this.writerName, this.promoted}) : super(key: key);
+  const AllBooksBookProdavac({Key key, this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,8 +22,8 @@ class AllBooksBookProdavac extends StatelessWidget {
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black))),
       child: Row(
         children: [
-          BookImage(
-            imagename: imageUrl,
+          BookClickableImage(
+            imageUrl: book.bookUrl,
             height: 200,
             width: 140,
           ),
@@ -39,7 +36,7 @@ class AllBooksBookProdavac extends StatelessWidget {
             children: [
               CinzelText(
                 fontSize: 32,
-                displayText: bookName,
+                displayText: book.name,
                 color: Colors.black,
               ),
               SizedBox(
@@ -47,31 +44,37 @@ class AllBooksBookProdavac extends StatelessWidget {
               ),
               CinzelText(
                 fontSize: 32,
-                displayText: writerName,
+                displayText: book.writer,
                 color: Colors.black,
               )
             ],
           ),
           Spacer(),
-          loggedUser.buyer ? Container() : Row(
-            children: [
-              CinzelText(
-                displayText: "PROMOVIŠI:",
-                fontSize: 24,
-                color: Color(0xFF000000),
-              ),
-              PerceCheckBox(
-                function: () {},
-                isChecked: promoted,
-              ),
-              Container(
-                width: 25,
-              )
-            ],
-          ),
+          loggedUser.buyer
+              ? Container()
+              : Row(
+                  children: [
+                    CinzelText(
+                      displayText: "PROMOVIŠI:",
+                      fontSize: 24,
+                      color: Color(0xFF000000),
+                    ),
+                    PerceCheckBox(
+                      function: () {
+                        Book bookNew = book;
+                        bookNew.promoted=!book.promoted;
+                        Boxes.getBooks().put(book.bookUrl,bookNew);
+                      },
+                      isChecked: book.promoted,
+                    ),
+                    Container(
+                      width: 25,
+                    )
+                  ],
+                ),
           PerceButton(
             text: "DETALJI KNJIGE",
-            function: (){},
+            function: () {},
             color1: Color(0xFF133069),
             color2: Color(0xFF133069),
             color3: Color(0xFF133069),

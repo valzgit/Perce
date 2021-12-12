@@ -25,7 +25,7 @@ class _PerceCheckBoxState extends State<PerceCheckBox> {
 
   @override
   Widget build(BuildContext context) {
-    if(firstTime && widget.isChecked!=null && widget.isChecked==true){firstTime = false; isChecked=true;}
+    if(firstTime && widget.isChecked!=null){firstTime = false; isChecked=widget.isChecked;}
     return Container(
       child: Checkbox(
         checkColor: Colors.white,

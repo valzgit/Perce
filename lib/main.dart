@@ -13,10 +13,12 @@ Future<void> main() async {
   Hive.registerAdapter(LoggedUserAdapter());
   Hive.registerAdapter(BookAdapter());
   Hive.registerAdapter(UserBookRelationAdapter());
+  Hive.registerAdapter(StoredBookAdapter());
   await Hive.openBox<User>("users");
   await Hive.openBox<LoggedUser>("loggedUser");
   await Hive.openBox<Book>("books");
   await Hive.openBox<UserBookRelation>("userbookrelations");
+  await Hive.openBox<StoredBook>("storedbooks");
   final usersBox = Boxes.getUsers();
   final shelf = Boxes.getBooks();
   final buyer = User()

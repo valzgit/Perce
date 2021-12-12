@@ -72,3 +72,18 @@ class UserBookRelation extends HiveObject{
   @HiveField(1)
   List<String> bookUrls;
 }
+
+@HiveType(typeId:4)
+class StoredBook extends HiveObject{
+  @HiveField(0)
+  String name;
+
+  @HiveField(1)
+  String writer;
+
+  @HiveField(2)
+  String bookUrl;
+
+  @HiveField(3)
+  bool promoted;
+}

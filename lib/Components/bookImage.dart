@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BookImage extends StatelessWidget {
-  final String imagename;
+  final String imageUrl;
   final double marginLeft;
   final double height;
   final double width;
 
-  const BookImage({Key key, this.imagename, this.marginLeft, this.height, this.width}) : super(key: key);
+  const BookImage({Key key, this.imageUrl, this.marginLeft, this.height, this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class BookImage extends StatelessWidget {
       decoration: BoxDecoration(
         image: DecorationImage(
           fit: BoxFit.cover,
-          image: AssetImage("assets/images/" + imagename),
+          image: AssetImage("assets/images/" + imageUrl),
         ),
       ),
     );

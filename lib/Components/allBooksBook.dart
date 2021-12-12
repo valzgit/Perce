@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
-import 'package:perce/Components/bookimage.dart';
+import 'package:perce/Components/bookclickableimage.dart';
 import 'package:perce/Components/perceButton.dart';
+import 'package:perce/Hive/boxes.dart';
+import 'package:perce/Hive/transaction.dart';
 
 class AllBooksBook extends StatelessWidget {
   final String imageUrl;
@@ -20,8 +22,8 @@ class AllBooksBook extends StatelessWidget {
       decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black))),
       child: Row(
         children: [
-          BookImage(
-            imagename: imageUrl,
+          BookClickableImage(
+            imageUrl: imageUrl,
             height: 200,
             width: 140,
           ),
@@ -50,7 +52,17 @@ class AllBooksBook extends StatelessWidget {
           Spacer(),
           PerceButton(
             text: "DETALJI KNJIGE",
-            function: (){},
+            function: (){
+              Book book = Boxes.getBooks().get(imageUrl);
+              LoggedUser loggedUser = Boxes.loggedUser().get("logged");
+              StoredBook storedBook = StoredBook()
+                ..promoted = book.promoted
+                ..bookUrl = book.bookUrl
+                ..writer = book.writer
+                ..name = book.name;
+              Boxes.getStoredBooks().put(loggedUser.userName, storedBook);
+              Navigator.of(context).pushNamed("/storedbook");
+            },
             color1: Color(0xFF133069),
             color2: Color(0xFF133069),
             color3: Color(0xFF133069),
