@@ -3,6 +3,7 @@ import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookImage.dart';
 import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/perceButton.dart';
+import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
@@ -108,7 +109,7 @@ class BookDetailsPage extends StatelessWidget {
                   width: 300,
                 ),
                 SizedBox(
-                  width: 150,
+                  width: unit*2.5,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -119,33 +120,107 @@ class BookDetailsPage extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 45,
                     ),
-                    Row(children: [
-                      CinzelText(
-                        displayText: storedBook.writer,
-                        color: Colors.black,
-                        fontSize: 45,
-                      ),
-                      SizedBox(width: 120,),
-                      CinzelText(
-                        displayText: storedBook.placeYear,
-                        color: Colors.black,
-                        fontSize: 35,
-                      ),
-                    ]),
+                    Row(
+                      children: [
+                        CinzelText(
+                          displayText: storedBook.writer,
+                          color: Colors.black,
+                          fontSize: 45,
+                        ),
+                        SizedBox(
+                          width: 120,
+                        ),
+                        CinzelText(
+                          displayText: storedBook.placeYear,
+                          color: Colors.black,
+                          fontSize: 35,
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 40,
                     ),
                     Container(
-                      height: 355,
+                      height: 320,
                       width: 1000,
                       child: CinzelAutoSizeText(
                         displayText: storedBook.details,
                         fontSize: 25,
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        CinzelText(
+                          displayText: "Broj strana: " + storedBook.pageNumber.toString(),
+                          fontSize: 30,
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          width: 340,
+                        ),
+                        PerceButton(
+                          color1: Color(0xFF111F38),
+                          color2: Color(0xFF111F38),
+                          color3: Color(0xFF111F38),
+                          text: 'NAZAD',
+                          function: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        PerceButton(
+                          color1: Color(0xFF133069),
+                          color2: Color(0xFF133069),
+                          color3: Color(0xFF133069),
+                          text: 'PREPORUČI',
+                          function: () {
+                            //Navigator.of(context).popAndPushNamed("/changeuserdata");
+                          },
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ],
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            Expanded(
+              child: Container(
+                width: size.width,
+                color: Color(0xFF391D1D),
+                child: Row(
+                  children: [
+                    Container(
+                      width: size.width*3.0/5,
+                      decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 4))),
+                    ),
+                    Container(
+                      width: size.width*2.0/5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          TextFieldInput(
+                            minLines: 6,
+                            hintText: "Napiši komentar...",
+                            obscureText: false,
+                            width: size.width*1.5/5,
+                            validator: (value) {
+                              return null;
+                            },
+                          ),
+                        ]
+                      ),
+                    )
+                  ],
+                ),
+              ),
             )
           ],
         ),
