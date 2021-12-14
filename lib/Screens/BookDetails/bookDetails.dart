@@ -3,6 +3,7 @@ import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookImage.dart';
 import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/perceButton.dart';
+import 'package:perce/Components/perceStarsSelect.dart';
 import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
@@ -194,7 +195,7 @@ class BookDetailsPage extends StatelessWidget {
             Expanded(
               child: Container(
                 width: size.width,
-                color: Color(0xFF391D1D),
+                color: Color(0xCC391D1D),
                 child: Row(
                   children: [
                     Container(
@@ -206,6 +207,7 @@ class BookDetailsPage extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: 20,),
                           TextFieldInput(
                             minLines: 6,
                             hintText: "Napiši komentar...",
@@ -215,6 +217,22 @@ class BookDetailsPage extends StatelessWidget {
                               return null;
                             },
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              PerceStartSelect(width: 150, height: 30,),
+                              SizedBox(width: 30,),
+                              PerceButton(
+                                color1: Color(0xFF136940),
+                                color2: Color(0xFF136940),
+                                color3: Color(0xFF136940),
+                                text: 'OCENI',
+                                function: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          )
                         ]
                       ),
                     )
