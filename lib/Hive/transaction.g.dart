@@ -245,3 +245,45 @@ class StoredBookAdapter extends TypeAdapter<StoredBook> {
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
+
+class BookCommentedAdapter extends TypeAdapter<BookCommented> {
+  @override
+  final int typeId = 5;
+
+  @override
+  BookCommented read(BinaryReader reader) {
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return BookCommented()
+      ..bookUrl = fields[0] as String
+      ..userNames = (fields[1] as List)?.cast<String>()
+      ..comments = (fields[2] as List)?.cast<String>()
+      ..starsGiven = (fields[3] as List)?.cast<int>();
+  }
+
+  @override
+  void write(BinaryWriter writer, BookCommented obj) {
+    writer
+      ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.bookUrl)
+      ..writeByte(1)
+      ..write(obj.userNames)
+      ..writeByte(2)
+      ..write(obj.comments)
+      ..writeByte(3)
+      ..write(obj.starsGiven);
+  }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BookCommentedAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
+}

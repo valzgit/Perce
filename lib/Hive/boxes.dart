@@ -7,4 +7,5 @@ class Boxes {
   static Box<Book> getBooks() => Hive.box<Book>('books');
   static Box<UserBookRelation> getUserBookRelations() => Hive.box<UserBookRelation>('userbookrelations');
   static Box<StoredBook> getStoredBooks() => Hive.box<StoredBook>('storedbooks');
+  static Box<BookCommented> getCommentsForBook() => Hive.box<BookCommented>("bookcomments");
 }

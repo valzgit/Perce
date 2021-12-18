@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 
-class PerceStartSelect extends StatefulWidget {
+class PerceStarsSelect extends StatefulWidget {
   final double width;
   final double height;
-
-  const PerceStartSelect({Key key, this.width, this.height}) : super(key: key);
+  var clickedStars = 5;
+  PerceStarsSelect({Key key, this.width, this.height}) : super(key: key);
 
   @override
   _PerceStartSelectState createState() => _PerceStartSelectState();
+
+  int clickedStarsCount(){
+    return clickedStars;
+  }
 }
 
-class _PerceStartSelectState extends State<PerceStartSelect> {
+class _PerceStartSelectState extends State<PerceStarsSelect> {
   int lastClickedIndex = 4;
   List<Widget> stars = [];
 
   @override
   Widget build(BuildContext context) {
     stars = [];
+    widget.clickedStars = lastClickedIndex + 1;
     for (int i = 0; i < 5; ++i) {
       if (i <= lastClickedIndex) {
         stars.add(

@@ -1,22 +1,123 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookImage.dart';
-import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/perceStarsSelect.dart';
 import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
-class BookDetailsPage extends StatelessWidget {
+class BookDetailsPage extends StatefulWidget {
   const BookDetailsPage({Key key}) : super(key: key);
 
+  @override
+  _BookDetailsPageState createState() => _BookDetailsPageState();
+}
+
+class _BookDetailsPageState extends State<BookDetailsPage> {
   @override
   Widget build(BuildContext context) {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
     StoredBook storedBook = Boxes.getStoredBooks().get(loggedUser.userName);
+    BookCommented bookComments = Boxes.getCommentsForBook().get(storedBook.bookUrl);
+    final _formKey = GlobalKey<FormState>();
+    String comment = "";
     Size size = MediaQuery.of(context).size;
     double unit = size.height / 12;
+    List<Widget> comments = [];
+    var stars = PerceStarsSelect(
+      width: 150,
+      height: 30,
+    );
+    double starsRate = 0;
+    for (int i = 0; i < bookComments.userNames.length; ++i) {
+      starsRate += bookComments.starsGiven[i];
+      comments.add(Container(
+        width: size.width * 3.0 / 5,
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border(
+            top: BorderSide(color: Colors.black, width: 1),
+            bottom: BorderSide(color: Colors.black, width: 1),
+          ),
+        ),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 40,
+            ),
+            CinzelText(
+              displayText: bookComments.userNames[i] + ":",
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            CinzelText(
+              displayText: bookComments.comments[i],
+              fontSize: 20,
+            ),
+            Expanded(
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    CinzelText(
+                      displayText: bookComments.starsGiven[i].toString(),
+                      fontSize: 20,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/star.png"))),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ));
+    }
+    if (bookComments.userNames.length != 0) {
+      starsRate /= bookComments.userNames.length;
+      starsRate -= 1;
+    }
+    else{
+      starsRate = -1;
+    }
+    List<Widget> starsList = [];
+    for (int i = 0; i < 5; ++i) {
+      if (i <= starsRate) {
+        starsList.add(
+          Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/star.png"))),
+          ),
+        );
+      } else {
+        starsList.add(
+          Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/emptystar.png"))),
+          ),
+        );
+      }
+      starsList.add(SizedBox(
+        width: 5,
+      ));
+    }
     return Scaffold(
       appBar: AppBar(
         title: InkWell(
@@ -104,13 +205,30 @@ class BookDetailsPage extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                BookImage(
-                  imageUrl: storedBook.bookUrl,
-                  height: 455,
-                  width: 300,
+                Column(
+                  children: [
+                    BookImage(
+                      imageUrl: storedBook.bookUrl,
+                      height: 455,
+                      width: 300,
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 70,
+                        ),
+                        Row(
+                          children: starsList,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
                 SizedBox(
-                  width: unit*2.5,
+                  width: unit * 2.5,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -192,51 +310,68 @@ class BookDetailsPage extends StatelessWidget {
             SizedBox(
               height: 40,
             ),
-            Expanded(
-              child: Container(
-                width: size.width,
-                color: Color(0xCC391D1D),
-                child: Row(
-                  children: [
-                    Container(
-                      width: size.width*3.0/5,
-                      decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 4))),
-                    ),
-                    Container(
-                      width: size.width*2.0/5,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 20,),
+            Form(
+              key: _formKey,
+              child: Expanded(
+                child: Container(
+                  width: size.width,
+                  color: Color(0xCC391D1D),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: size.width * 3.0 / 5,
+                        decoration: BoxDecoration(border: Border(right: BorderSide(color: Colors.black, width: 4))),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: comments,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: size.width * 2.0 / 5,
+                        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                          SizedBox(
+                            height: 20,
+                          ),
                           TextFieldInput(
                             minLines: 6,
                             hintText: "Napiši komentar...",
                             obscureText: false,
-                            width: size.width*1.5/5,
+                            width: size.width * 1.5 / 5,
                             validator: (value) {
+                              comment = value;
                               return null;
                             },
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              PerceStartSelect(width: 150, height: 30,),
-                              SizedBox(width: 30,),
+                              stars,
+                              SizedBox(
+                                width: 30,
+                              ),
                               PerceButton(
                                 color1: Color(0xFF136940),
                                 color2: Color(0xFF136940),
                                 color3: Color(0xFF136940),
                                 text: 'OCENI',
                                 function: () {
-                                  Navigator.of(context).pop();
+                                  if (_formKey.currentState.validate()) {
+                                    bookComments.starsGiven.add(stars.clickedStarsCount());
+                                    bookComments.userNames.add(loggedUser.userName);
+                                    bookComments.comments.add(comment);
+                                    final commentBox = Boxes.getCommentsForBook();
+                                    commentBox.put(storedBook.bookUrl, bookComments);
+                                    setState(() {});
+                                  }
                                 },
                               ),
                             ],
                           )
-                        ]
-                      ),
-                    )
-                  ],
+                        ]),
+                      )
+                    ],
+                  ),
                 ),
               ),
             )

@@ -105,3 +105,18 @@ class StoredBook extends HiveObject{
   @HiveField(6)
   String placeYear;
 }
+
+@HiveType(typeId:5)
+class BookCommented extends HiveObject{
+  @HiveField(0)
+  String bookUrl;
+
+  @HiveField(1)
+  List<String> userNames;
+
+  @HiveField(2)
+  List<String> comments;
+
+  @HiveField(3)
+  List<int> starsGiven;
+}
