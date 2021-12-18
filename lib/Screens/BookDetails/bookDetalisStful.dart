@@ -298,6 +298,67 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                           color3: Color(0xFF133069),
                           text: 'PREPORUČI',
                           function: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                actions: [
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          TextFieldInput(
+                                            hintText: "Korisničko ime korisnika",
+                                            obscureText: false,
+                                            width: 300,
+                                            validator: (value) {
+                                              return null;
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 5,
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+
+                                            },
+                                            child: Container(
+                                              width: 40,
+                                              height: 40,
+                                              decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/lupa.png"))),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          PerceButton(
+                                            color1: Color(0xFF133069),
+                                            color2: Color(0xFF133069),
+                                            color3: Color(0xFF133069),
+                                            text: 'PREPORUČI',
+                                            function: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          SizedBox(width: 12),
+                                          PerceButton(
+                                            color1: Color(0xFF0E1926),
+                                            color2: Color(0xFF0E1926),
+                                            color3: Color(0xFF0E1926),
+                                            text: 'NAZAD',
+                                            function: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          SizedBox(height: 7)
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                                backgroundColor: Color(0xFFF9F6F0),
+                              ),
+                            );
                             //Navigator.of(context).popAndPushNamed("/changeuserdata");
                           },
                         ),
