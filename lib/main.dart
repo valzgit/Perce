@@ -79,7 +79,7 @@ Future<void> main() async {
     ..comments = commentsFromUsers
     ..starsGiven = starsUsersLeft
     ..userNames = userNamesCommented;
-  commentBox.put("crimeandpunishment.png",bookComments);
+  commentBox.put("crimeandpunishment.png", bookComments);
   List<Book> bookList = new List<Book>();
   bookList.add(Book()
     ..name = "Zlocin i kazna"
@@ -311,6 +311,21 @@ Future<void> main() async {
       UserBookRelation()
         ..username = "user"
         ..bookUrls = ["umbertoeco.png", "littleprince.jpg"]);
+  relations.put(
+      "ana",
+      UserBookRelation()
+        ..username = "ana"
+        ..bookUrls = []);
+  relations.put(
+      "milan",
+      UserBookRelation()
+        ..username = "milan"
+        ..bookUrls = []);
+  relations.put(
+      "prod",
+      UserBookRelation()
+        ..username = "prod"
+        ..bookUrls = []);
   runApp(MyApp());
 }
 

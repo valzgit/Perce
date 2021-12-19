@@ -4,13 +4,15 @@ import 'package:perce/Components/Basic/cinzelAutoSizeText.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/bookImage.dart';
 import 'package:perce/Components/perceButton.dart';
+import 'package:perce/Components/perceDialog.dart';
 import 'package:perce/Components/perceStarsSelect.dart';
 import 'package:perce/Components/textFieldInput.dart';
 import 'package:perce/Hive/boxes.dart';
 import 'package:perce/Hive/transaction.dart';
 
 class BookDetailsPage extends StatefulWidget {
-  const BookDetailsPage({Key key}) : super(key: key);
+  List<Widget> recommendedFriend = [];
+  BookDetailsPage({Key key}) : super(key: key);
 
   @override
   _BookDetailsPageState createState() => _BookDetailsPageState();
@@ -300,66 +302,8 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                           function: () {
                             showDialog(
                               context: context,
-                              builder: (_) => AlertDialog(
-                                actions: [
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          TextFieldInput(
-                                            hintText: "Korisničko ime korisnika",
-                                            obscureText: false,
-                                            width: 300,
-                                            validator: (value) {
-                                              return null;
-                                            },
-                                          ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-
-                                            },
-                                            child: Container(
-                                              width: 40,
-                                              height: 40,
-                                              decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/lupa.png"))),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          PerceButton(
-                                            color1: Color(0xFF133069),
-                                            color2: Color(0xFF133069),
-                                            color3: Color(0xFF133069),
-                                            text: 'PREPORUČI',
-                                            function: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          SizedBox(width: 12),
-                                          PerceButton(
-                                            color1: Color(0xFF0E1926),
-                                            color2: Color(0xFF0E1926),
-                                            color3: Color(0xFF0E1926),
-                                            text: 'NAZAD',
-                                            function: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                          SizedBox(height: 7)
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                                backgroundColor: Color(0xFFF9F6F0),
-                              ),
+                              builder: (_) => PerceDialog()
                             );
-                            //Navigator.of(context).popAndPushNamed("/changeuserdata");
                           },
                         ),
                       ],
@@ -397,6 +341,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                           TextFieldInput(
                             minLines: 6,
                             hintText: "Napiši komentar...",
+                            charLimit: 70,
                             obscureText: false,
                             width: size.width * 1.5 / 5,
                             validator: (value) {

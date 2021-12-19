@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:perce/Components/Basic/textfieldcontainer.dart';
 
 class TextFieldInput extends StatelessWidget {
@@ -8,6 +9,7 @@ class TextFieldInput extends StatelessWidget {
   final double width;
   final FormFieldValidator<String> validator;
   final int minLines;
+  final int charLimit;
   const TextFieldInput({
     Key key,
     this.hintText,
@@ -15,7 +17,8 @@ class TextFieldInput extends StatelessWidget {
     this.width,
     this.validator,
     this.initalValue,
-    this.minLines
+    this.minLines,
+    this.charLimit
   }) : super(key: key);
 
   @override
@@ -23,6 +26,9 @@ class TextFieldInput extends StatelessWidget {
     return TextFieldContainer(
       width: width,
       child: TextFormField(
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(charLimit==null?1000:charLimit),
+        ],
         minLines: minLines == null ? 1 : minLines,
         maxLines: minLines == null ? 1 : minLines,
         obscureText: obscureText,
