@@ -191,6 +191,16 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
                       decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/lupa.png"))),
                     ),
                   ),
+                  SizedBox(width: 40,),
+                  PerceButton(
+                    color1: Color(0xFF136940),
+                    color2: Color(0xFF136940),
+                    color3: Color(0xFF136940),
+                    text: 'DODAJ KNJIGU',
+                    function: () {
+                      Navigator.of(context).pushNamed("/addbook");
+                    },
+                  ),
                 ],
               ),
             ),

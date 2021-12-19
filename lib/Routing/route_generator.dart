@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:perce/Screens/AddBookPage/addBookPage.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooks.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooksProdavac.dart';
 import 'package:perce/Screens/BookDetails/bookDetalisStful.dart';
@@ -26,6 +27,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => StatefulAllBooksProdavacScreen());
       case '/storedbook':
         return MaterialPageRoute(builder: (_) => BookDetailsPage());
+      case '/addbook':
+        return MaterialPageRoute(builder: (_) => AddBookPage());
       default:
         return _errorRoute();
 

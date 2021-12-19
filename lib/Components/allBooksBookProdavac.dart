@@ -73,7 +73,20 @@ class AllBooksBookProdavac extends StatelessWidget {
                 ),
           PerceButton(
             text: "DETALJI KNJIGE",
-            function: () {},
+            function: () {
+              Book book = Boxes.getBooks().get(this.book.bookUrl);
+              LoggedUser loggedUser = Boxes.loggedUser().get("logged");
+              StoredBook storedBook = StoredBook()
+                ..promoted = book.promoted
+                ..bookUrl = book.bookUrl
+                ..writer = book.writer
+                ..name = book.name
+                ..pageNumber = book.pageNumber
+                ..details = book.details
+                ..placeYear = book.placeYear;
+              Boxes.getStoredBooks().put(loggedUser.userName, storedBook);
+              Navigator.of(context).pushNamed("/storedbook");
+            },
             color1: Color(0xFF133069),
             color2: Color(0xFF133069),
             color3: Color(0xFF133069),
