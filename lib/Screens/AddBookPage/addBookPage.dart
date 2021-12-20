@@ -1,11 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:perce/Components/Basic/cinzelText.dart';
 import 'package:perce/Components/Basic/robotoText.dart';
+import 'package:perce/Components/bookImage.dart';
 import 'package:perce/Components/perceButton.dart';
 import 'package:perce/Components/perceCheckBox.dart';
 import 'package:perce/Components/perceDropdownButton.dart';
 import 'package:perce/Components/textFieldInput.dart';
+import 'package:perce/Hive/boxes.dart';
+import 'package:perce/Hive/transaction.dart';
 
 class AddBookPage extends StatefulWidget {
   const AddBookPage({Key key}) : super(key: key);
@@ -15,6 +20,15 @@ class AddBookPage extends StatefulWidget {
 }
 
 class _AddBookPageState extends State<AddBookPage> {
+  final _formKey = GlobalKey<FormState>();
+  String bookName = "";
+  String bookWriter = "";
+  String cityYear = "";
+  bool promotion = false;
+  String genre = "";
+  int numberOfPages = 250;
+  String details = "";
+  String bookUrl = "blank_book_cover.png";
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -87,193 +101,275 @@ class _AddBookPageState extends State<AddBookPage> {
           )
         ],
       ),
-      body: Container(
-        width: size.width,
-        decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
-        child: Column(children: [
-          Container(
-            height: size.height-200,
-            child: Row(
-              children: [
-                Container(
-                  width: size.width * 3.0/4.0,
-                  child: Column(
+      body: Form(
+        key: _formKey,
+        child: Container(
+          width: size.width,
+          decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
+          child: Column(children: [
+            Container(
+              height: size.height-200,
+              child: Row(
+                children: [
+                  Container(
+                    width: size.width * 3.0/4.0,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 200,),
+                            RobotoText(
+                              displayText: "Naziv:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 42,
+                            ),
+                            TextFieldInput(
+                              hintText: "Unesi naziv knjige",
+                              obscureText: false,
+                              width: 5 * unit,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Unesi naziv knjige";
+                                }
+                                bookName = value;
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            RobotoText(
+                              displayText: "Promocija:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            PerceCheckBox(
+                              function: (){
+                                promotion = !promotion;
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 200,),
+                            RobotoText(
+                              displayText: "Pisac:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 42,
+                            ),
+                            TextFieldInput(
+                              hintText: "Unesi naziv pisca",
+                              obscureText: false,
+                              width: 5 * unit,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Unesi naziv pisca";
+                                }
+                                bookWriter = value;
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            RobotoText(
+                              displayText: "Žanr:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 106,),
+                            PerceDropdownButton(),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(width: 200,),
+                            RobotoText(
+                              displayText: "Izdanje:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextFieldInput(
+                              hintText: "Unesi grad i godinu",
+                              obscureText: false,
+                              width: 5 * unit,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return "Unesi grad i godinu";
+                                }
+                                cityYear = value;
+                                return null;
+                              },
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            RobotoText(
+                              displayText: "Broj strana:",
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            TextFieldInput(
+                              hintText: "Broj",
+                              obscureText: false,
+                              width: 3 * unit / 2,
+                              validator: (value) {
+                                bool isNumeric = true;
+                                if (value == null) {
+                                  isNumeric = false;
+                                } else
+                                  isNumeric = double.parse(value, (e) => null) != null;
+                                if (value.isEmpty) {
+                                  return "Unesi broj strana";
+                                }
+                                if (value.isEmpty || !isNumeric) {
+                                  return "Broj strana nije u dobrom formatu";
+                                }
+                                numberOfPages = int.parse(value);
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 30,
+                            )
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 60,
+                            ),
+                            RobotoText(
+                              displayText: "Opis:",
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 60,
+                            ),
+                            TextFieldInput(
+                              minLines: 14,
+                              hintText: "Dodaj opis...",
+                              obscureText: false,
+                              width: size.width * 3 / 4 - 150,
+                              validator: (value) {
+                                if(value.isEmpty){
+                                  return "Unesi opis knjige";
+                                }
+                                details = value;
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(width: 200,),
-                          RobotoText(
-                            displayText: "Naziv:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 42,
-                          ),
-                          TextFieldInput(
-                            hintText: "Unesi naziv knjige",
-                            obscureText: false,
-                            width: 5 * unit,
-                            validator: (value) {
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          RobotoText(
-                            displayText: "Promocija:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          PerceCheckBox(
-                            function: (){},
-                          ),
-                        ],
+                      BookImage(
+                        imageUrl: bookUrl,
+                        height: 455,
+                        width: 300,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(width: 200,),
-                          RobotoText(
-                            displayText: "Pisac:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 42,
-                          ),
-                          TextFieldInput(
-                            hintText: "Unesi naziv pisca",
-                            obscureText: false,
-                            width: 5 * unit,
-                            validator: (value) {
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          RobotoText(
-                            displayText: "Žanr:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(width: 106,),
-                          PerceDropdownButton(),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(width: 200,),
-                          RobotoText(
-                            displayText: "Izdanje:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          TextFieldInput(
-                            hintText: "Unesi grad i godinu",
-                            obscureText: false,
-                            width: 5 * unit,
-                            validator: (value) {
-                              return null;
-                            },
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          RobotoText(
-                            displayText: "Broj strana:",
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          TextFieldInput(
-                            hintText: "Broj",
-                            obscureText: false,
-                            width: 3 * unit / 2,
-                            validator: (value) {
-                              return null;
-                            },
-                          ),
-                        ],
+                      SizedBox(
+                        height: 40,
                       ),
                       Row(
                         children: [
                           SizedBox(
-                            height: 30,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 60,
+                            width: 80,
                           ),
-                          RobotoText(
-                            displayText: "Opis:",
-                            color: Colors.black,
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 60,
-                          ),
-                          TextFieldInput(
-                            minLines: 14,
-                            hintText: "Dodaj opis...",
-                            obscureText: false,
-                            width: size.width * 3 / 4 - 150,
-                            validator: (value) {
-                              return null;
+                          PerceButton(
+                            function: (){
+                              var rng = new Random();
+                              bookUrl = "proces" + (rng.nextInt(3) + 1).toString() + ".jpg";
+                              setState(() {});
                             },
+                            text: "DODAJ SLIKU",
+                            color1: Color(0xFFB4670D),
+                            color2: Color(0xFFB4670D),
+                            color3: Color(0xFFB4670D),
                           ),
-                        ],
+                        ]
                       ),
                     ],
-                  ),
-                ),
-                Column()
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  PerceButton(
-                    color1: Color(0xFF0DB41D),
-                    color2: Color(0xFF0DB41D),
-                    color3: Color(0xFF0DB41D),
-                    text: 'DODAJ KNJIGU',
-                    function: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                  SizedBox(width: 200,),
-                  PerceButton(
-                    color1: Color(0xFF0E1926),
-                    color2: Color(0xFF0E1926),
-                    color3: Color(0xFF0E1926),
-                    text: 'NAZAD',
-                    function: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
+                  )
                 ],
               ),
             ),
-          ),
-        ]),
+            Expanded(
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PerceButton(
+                      color1: Color(0xFF0DB41D),
+                      color2: Color(0xFF0DB41D),
+                      color3: Color(0xFF0DB41D),
+                      text: 'DODAJ KNJIGU',
+                      function: () {
+                        if(_formKey.currentState.validate()){
+                          final shelf = Boxes.getBooks();
+                          Book newBook = Book()
+                            ..name = bookName
+                            ..writer = bookWriter
+                            ..bookUrl = bookUrl
+                            ..promoted = promotion
+                            ..placeYear = cityYear
+                            ..pageNumber = numberOfPages
+                            ..details = details;
+                          shelf.put(newBook.bookUrl, newBook);
+                          final commentBox = Boxes.getCommentsForBook();
+                          var bookCommentsEmpty = BookCommented()
+                            ..bookUrl = newBook.bookUrl
+                            ..comments = []
+                            ..starsGiven = []
+                            ..userNames = [];
+                          commentBox.put(bookCommentsEmpty.bookUrl, bookCommentsEmpty);
+                          Navigator.of(context).popAndPushNamed("/allbooksprodavac");
+                        }
+                      },
+                    ),
+                    SizedBox(width: 200,),
+                    PerceButton(
+                      color1: Color(0xFF0E1926),
+                      color2: Color(0xFF0E1926),
+                      color3: Color(0xFF0E1926),
+                      text: 'NAZAD',
+                      function: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ]),
+        ),
       ),
     );
   }
