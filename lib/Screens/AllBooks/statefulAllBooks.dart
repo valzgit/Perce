@@ -19,6 +19,7 @@ class _StatefulAllBooksScreenState extends State<StatefulAllBooksScreen> {
   bool promotion = false;
   String searchParam = "";
   final _formKey = GlobalKey<FormState>();
+  String pickedGenre = "Svaki";
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class _StatefulAllBooksScreenState extends State<StatefulAllBooksScreen> {
     List<Widget> allBooks = [];
     for (int i = 0; i < Boxes.getBooks().length; ++i) {
       Book book = Boxes.getBooks().getAt(i);
-      if ((promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
+      if ((pickedGenre == "Svaki" || pickedGenre==book.genre) && (promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
         allBooks.add(AllBooksBook(
           key: UniqueKey(),
           imageUrl: book.bookUrl,
@@ -142,7 +143,12 @@ class _StatefulAllBooksScreenState extends State<StatefulAllBooksScreen> {
                   SizedBox(
                     width: 20,
                   ),
-                  PerceDropdownButton(),
+                  PerceDropdownButton(
+                    function: (newValue) {
+                      pickedGenre = newValue;
+                      setState(() {});
+                    },
+                  ),
                   SizedBox(
                     width: 40,
                   ),

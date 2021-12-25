@@ -125,13 +125,14 @@ class BookAdapter extends TypeAdapter<Book> {
       ..promoted = fields[3] as bool
       ..details = fields[4] as String
       ..pageNumber = fields[5] as int
-      ..placeYear = fields[6] as String;
+      ..placeYear = fields[6] as String
+      ..genre = fields[7] as String;
   }
 
   @override
   void write(BinaryWriter writer, Book obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -145,7 +146,9 @@ class BookAdapter extends TypeAdapter<Book> {
       ..writeByte(5)
       ..write(obj.pageNumber)
       ..writeByte(6)
-      ..write(obj.placeYear);
+      ..write(obj.placeYear)
+      ..writeByte(7)
+      ..write(obj.genre);
   }
 
   @override
@@ -212,13 +215,14 @@ class StoredBookAdapter extends TypeAdapter<StoredBook> {
       ..promoted = fields[3] as bool
       ..details = fields[4] as String
       ..pageNumber = fields[5] as int
-      ..placeYear = fields[6] as String;
+      ..placeYear = fields[6] as String
+      ..genre = fields[7] as String;
   }
 
   @override
   void write(BinaryWriter writer, StoredBook obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -232,7 +236,9 @@ class StoredBookAdapter extends TypeAdapter<StoredBook> {
       ..writeByte(5)
       ..write(obj.pageNumber)
       ..writeByte(6)
-      ..write(obj.placeYear);
+      ..write(obj.placeYear)
+      ..writeByte(7)
+      ..write(obj.genre);
   }
 
   @override

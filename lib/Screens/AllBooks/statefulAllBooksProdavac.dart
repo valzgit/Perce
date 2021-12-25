@@ -18,6 +18,7 @@ class StatefulAllBooksProdavacScreen extends StatefulWidget {
 class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdavacScreen> {
   bool promotion = false;
   String searchParam = "";
+  String pickedGenre = "Svaki";
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,7 +28,7 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
     List<Widget> allBooks = [];
     for (int i = 0; i < Boxes.getBooks().length; ++i) {
       Book book = Boxes.getBooks().getAt(i);
-      if ((promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
+      if ((pickedGenre == "Svaki" || pickedGenre==book.genre) && (promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
         allBooks.add(AllBooksBookProdavac(key: UniqueKey(), book: book));
     }
     return Scaffold(
@@ -137,7 +138,12 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
                   SizedBox(
                     width: 20,
                   ),
-                  PerceDropdownButton(),
+                  PerceDropdownButton(
+                    function: (newValue) {
+                      pickedGenre = newValue;
+                      setState(() {});
+                    },
+                  ),
                   SizedBox(
                     width: 40,
                   ),
@@ -191,7 +197,9 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
                       decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/lupa.png"))),
                     ),
                   ),
-                  SizedBox(width: 40,),
+                  SizedBox(
+                    width: 40,
+                  ),
                   PerceButton(
                     color1: Color(0xFF136940),
                     color2: Color(0xFF136940),

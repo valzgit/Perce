@@ -29,6 +29,8 @@ class _AddBookPageState extends State<AddBookPage> {
   int numberOfPages = 250;
   String details = "";
   String bookUrl = "blank_book_cover.png";
+  String pickedGenre = "Svaki";
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -81,7 +83,6 @@ class _AddBookPageState extends State<AddBookPage> {
                           },
                         ),
                         SizedBox(height: 12),
-
                         SizedBox(height: 7)
                       ],
                     ),
@@ -108,18 +109,20 @@ class _AddBookPageState extends State<AddBookPage> {
           decoration: BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: AssetImage("assets/images/plain_background.jpg"))),
           child: Column(children: [
             Container(
-              height: size.height-200,
+              height: size.height - 200,
               child: Row(
                 children: [
                   Container(
-                    width: size.width * 3.0/4.0,
+                    width: size.width * 3.0 / 4.0,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(width: 200,),
+                            SizedBox(
+                              width: 200,
+                            ),
                             RobotoText(
                               displayText: "Naziv:",
                               color: Colors.black,
@@ -150,7 +153,7 @@ class _AddBookPageState extends State<AddBookPage> {
                               width: 25,
                             ),
                             PerceCheckBox(
-                              function: (){
+                              function: () {
                                 promotion = !promotion;
                               },
                             ),
@@ -159,7 +162,9 @@ class _AddBookPageState extends State<AddBookPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(width: 200,),
+                            SizedBox(
+                              width: 200,
+                            ),
                             RobotoText(
                               displayText: "Pisac:",
                               color: Colors.black,
@@ -186,14 +191,22 @@ class _AddBookPageState extends State<AddBookPage> {
                               displayText: "Žanr:",
                               color: Colors.black,
                             ),
-                            SizedBox(width: 106,),
-                            PerceDropdownButton(),
+                            SizedBox(
+                              width: 106,
+                            ),
+                            PerceDropdownButton(
+                              function: (newValue) {
+                                pickedGenre = newValue;
+                              },
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            SizedBox(width: 200,),
+                            SizedBox(
+                              width: 200,
+                            ),
                             RobotoText(
                               displayText: "Izdanje:",
                               color: Colors.black,
@@ -274,7 +287,7 @@ class _AddBookPageState extends State<AddBookPage> {
                               obscureText: false,
                               width: size.width * 3 / 4 - 150,
                               validator: (value) {
-                                if(value.isEmpty){
+                                if (value.isEmpty) {
                                   return "Unesi opis knjige";
                                 }
                                 details = value;
@@ -297,24 +310,22 @@ class _AddBookPageState extends State<AddBookPage> {
                       SizedBox(
                         height: 40,
                       ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 80,
-                          ),
-                          PerceButton(
-                            function: (){
-                              var rng = new Random();
-                              bookUrl = "proces" + (rng.nextInt(3) + 1).toString() + ".jpg";
-                              setState(() {});
-                            },
-                            text: "DODAJ SLIKU",
-                            color1: Color(0xFFB4670D),
-                            color2: Color(0xFFB4670D),
-                            color3: Color(0xFFB4670D),
-                          ),
-                        ]
-                      ),
+                      Row(children: [
+                        SizedBox(
+                          width: 80,
+                        ),
+                        PerceButton(
+                          function: () {
+                            var rng = new Random();
+                            bookUrl = "proces" + (rng.nextInt(3) + 1).toString() + ".jpg";
+                            setState(() {});
+                          },
+                          text: "DODAJ SLIKU",
+                          color1: Color(0xFFB4670D),
+                          color2: Color(0xFFB4670D),
+                          color3: Color(0xFFB4670D),
+                        ),
+                      ]),
                     ],
                   )
                 ],
@@ -332,7 +343,7 @@ class _AddBookPageState extends State<AddBookPage> {
                       color3: Color(0xFF0DB41D),
                       text: 'DODAJ KNJIGU',
                       function: () {
-                        if(_formKey.currentState.validate()){
+                        if (_formKey.currentState.validate()) {
                           final shelf = Boxes.getBooks();
                           Book newBook = Book()
                             ..name = bookName
@@ -341,6 +352,7 @@ class _AddBookPageState extends State<AddBookPage> {
                             ..promoted = promotion
                             ..placeYear = cityYear
                             ..pageNumber = numberOfPages
+                            ..genre = pickedGenre
                             ..details = details;
                           shelf.put(newBook.bookUrl, newBook);
                           final commentBox = Boxes.getCommentsForBook();
@@ -354,7 +366,9 @@ class _AddBookPageState extends State<AddBookPage> {
                         }
                       },
                     ),
-                    SizedBox(width: 200,),
+                    SizedBox(
+                      width: 200,
+                    ),
                     PerceButton(
                       color1: Color(0xFF0E1926),
                       color2: Color(0xFF0E1926),

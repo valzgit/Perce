@@ -34,6 +34,7 @@ class BookClickableImage extends StatelessWidget {
           ..name = book.name
           ..pageNumber = book.pageNumber
           ..details = book.details
+          ..genre = book.genre
           ..placeYear = book.placeYear;
         Boxes.getStoredBooks().put(loggedUser.userName, storedBook);
         Navigator.of(context).pushNamed("/storedbook");

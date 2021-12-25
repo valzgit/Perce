@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class PerceDropdownButton extends StatefulWidget {
-  const PerceDropdownButton({Key key}) : super(key: key);
+  final Function function;
+
+  const PerceDropdownButton({Key key, this.function}) : super(key: key);
 
   @override
   _PerceDropdownButtonState createState() => _PerceDropdownButtonState();
@@ -18,6 +20,7 @@ class _PerceDropdownButtonState extends State<PerceDropdownButton> {
       iconSize: 24,
       elevation: 16,
       onChanged: (String newValue) {
+        widget.function(newValue);
         setState(() {
           dropdownValue = newValue;
         });

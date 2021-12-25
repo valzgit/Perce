@@ -72,6 +72,9 @@ class Book extends HiveObject{
 
   @HiveField(6)
   String placeYear;
+
+  @HiveField(7)
+  String genre;
 }
 
 @HiveType(typeId:3)
@@ -104,6 +107,9 @@ class StoredBook extends HiveObject{
 
   @HiveField(6)
   String placeYear;
+
+  @HiveField(7)
+  String genre;
 }
 
 @HiveType(typeId:5)
