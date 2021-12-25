@@ -40,6 +40,9 @@ class RegistrationScreen extends StatelessWidget {
                     text1: 'KUPAC',
                     text2: 'PRODAVAC',
                     firstChoice: buyer,
+                    function: () {
+                      buyer = !buyer;
+                    },
                   ),
                   SizedBox(
                     height: height,
@@ -239,7 +242,6 @@ class RegistrationScreen extends StatelessWidget {
                     text: 'REGISTRUJ SE',
                     function: () {
                       if (_formKey.currentState.validate()) {
-                        final box = Boxes.getUsers();
                         final user = User()
                           ..name = name
                           ..password = password
@@ -248,8 +250,7 @@ class RegistrationScreen extends StatelessWidget {
                           ..phoneNumber = phoneNumber
                           ..email = email
                           ..buyer = buyer;
-                        box.put(userName, user);
-                        final loggedUserBox = Boxes.loggedUser();
+                        Boxes.getUsers().put(userName, user);
                         LoggedUser loggedUserCopy = LoggedUser()
                           ..name = user.name
                           ..phoneNumber = user.phoneNumber
@@ -258,7 +259,12 @@ class RegistrationScreen extends StatelessWidget {
                           ..userName = user.userName
                           ..lastName = user.lastName
                           ..buyer = user.buyer;
-                        loggedUserBox.put("logged", loggedUserCopy);
+                        Boxes.loggedUser().put("logged", loggedUserCopy);
+                        Boxes.getUserBookRelations().put(
+                            user.userName,
+                            UserBookRelation()
+                              ..username = user.userName
+                              ..bookUrls = []);
                         if (loggedUserCopy.buyer)
                           Navigator.of(context).popAndPushNamed("/buyermain");
                         else

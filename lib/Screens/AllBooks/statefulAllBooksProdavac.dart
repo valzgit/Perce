@@ -28,7 +28,7 @@ class _StatefulAllBooksProdavacScreenState extends State<StatefulAllBooksProdava
     for (int i = 0; i < Boxes.getBooks().length; ++i) {
       Book book = Boxes.getBooks().getAt(i);
       if ((promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
-        allBooks.add(AllBooksBookProdavac(book: book));
+        allBooks.add(AllBooksBookProdavac(key: UniqueKey(), book: book));
     }
     return Scaffold(
       appBar: AppBar(

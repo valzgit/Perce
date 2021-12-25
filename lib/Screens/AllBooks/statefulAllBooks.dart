@@ -29,6 +29,7 @@ class _StatefulAllBooksScreenState extends State<StatefulAllBooksScreen> {
       Book book = Boxes.getBooks().getAt(i);
       if ((promotion == false || book.promoted) && (book.name.toLowerCase().contains(searchParam.toLowerCase()) || book.writer.toLowerCase().contains(searchParam.toLowerCase())))
         allBooks.add(AllBooksBook(
+          key: UniqueKey(),
           imageUrl: book.bookUrl,
           bookName: book.name,
           writerName: book.writer,

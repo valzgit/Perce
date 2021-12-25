@@ -11,7 +11,7 @@ class BuyerMainScreen extends StatelessWidget {
     LoggedUser loggedUser = Boxes.loggedUser().get("logged");
     UserBookRelation userBookRelation = Boxes.getUserBookRelations().get(loggedUser.userName);
     List<Widget> recommendedBooks = [];
-    for (int i = 0; i < userBookRelation.bookUrls.length; ++i) {
+    for (int i = 0; i < userBookRelation.bookUrls.length && i < 8; ++i) {
       if (i == 0) {
         recommendedBooks.add(BookClickableImage(
           imageUrl: userBookRelation.bookUrls[i],
@@ -25,22 +25,9 @@ class BuyerMainScreen extends StatelessWidget {
     }
     List<Widget> allBooks = [];
     List<Widget> allPromotedBooks = [];
-    int promotedCounter=0;
+    int promotedCounter = 0;
     for (int i = 0; i < Boxes.getBooks().length && i < 8; ++i) {
       Book book = Boxes.getBooks().getAt(i);
-      if(book.promoted){
-        if(promotedCounter==0){
-          allPromotedBooks.add(BookClickableImage(
-            imageUrl: book.bookUrl,
-            marginLeft: 80,
-          ));
-        }
-        else{
-          allPromotedBooks.add(BookClickableImage(
-            imageUrl: book.bookUrl,
-          ));
-        }
-      }
       if (i == 0)
         allBooks.add(BookClickableImage(
           imageUrl: book.bookUrl,
@@ -48,6 +35,22 @@ class BuyerMainScreen extends StatelessWidget {
         ));
       else
         allBooks.add(BookClickableImage(imageUrl: book.bookUrl));
+    }
+    for (int i = 0; i < Boxes.getBooks().length && promotedCounter < 8; ++i) {
+      Book book = Boxes.getBooks().getAt(i);
+      if (book.promoted) {
+        if (promotedCounter == 0) {
+          allPromotedBooks.add(BookClickableImage(
+            imageUrl: book.bookUrl,
+            marginLeft: 80,
+          ));
+        } else {
+          allPromotedBooks.add(BookClickableImage(
+            imageUrl: book.bookUrl,
+          ));
+        }
+        ++promotedCounter;
+      }
     }
     allBooks.add(InkWell(
       child: Container(

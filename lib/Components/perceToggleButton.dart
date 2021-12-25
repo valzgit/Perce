@@ -4,6 +4,7 @@ import 'package:perce/Components/Basic/cinzelText.dart';
 class PerceToggleButton extends StatefulWidget {
   final String text1;
   final String text2;
+  final Function function;
   bool firstChoice;
 
   PerceToggleButton({
@@ -11,6 +12,7 @@ class PerceToggleButton extends StatefulWidget {
     this.text1,
     this.text2,
     this.firstChoice,
+    this.function
   }) : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class _PerceToggleButtonState extends State<PerceToggleButton> {
                   textStyle: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
+                  widget.function();
                   setState(() => widget.firstChoice = !widget.firstChoice);
                 },
                 child: CinzelText(
@@ -80,6 +83,7 @@ class _PerceToggleButtonState extends State<PerceToggleButton> {
                   textStyle: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
+                  widget.function();
                   setState(() => widget.firstChoice = !widget.firstChoice);
                 },
                 child: CinzelText(

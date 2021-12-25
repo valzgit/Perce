@@ -60,9 +60,8 @@ class AllBooksBookProdavac extends StatelessWidget {
                     ),
                     PerceCheckBox(
                       function: () {
-                        Book bookNew = book;
-                        bookNew.promoted=!book.promoted;
-                        Boxes.getBooks().put(book.bookUrl,bookNew);
+                        book.promoted=!book.promoted;
+                        Boxes.getBooks().put(book.bookUrl,book);
                       },
                       isChecked: book.promoted,
                     ),
