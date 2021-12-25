@@ -3,7 +3,7 @@ import 'package:perce/Screens/AddBookPage/addBookPage.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooks.dart';
 import 'package:perce/Screens/AllBooks/statefulAllBooksProdavac.dart';
 import 'package:perce/Screens/BookDetails/bookDetalisStful.dart';
-import 'package:perce/Screens/BuyerMain/buyerMain.dart';
+import 'package:perce/Screens/BuyerMain/buyerMainStateful.dart';
 import 'package:perce/Screens/EditUserData/editUserData.dart';
 import 'package:perce/Screens/Login/login_screen.dart';
 import 'package:perce/Screens/Registration/registration_screen.dart';
@@ -20,7 +20,7 @@ class RouteGenerator {
       case '/changeuserdata':
         return MaterialPageRoute(builder: (_) => EditUserDataScreen());
       case '/buyermain':
-        return MaterialPageRoute(builder: (_) => BuyerMainScreen());
+        return MaterialPageRoute(builder: (_) => BuyerMainStateful());
       case '/allbooks':
         return MaterialPageRoute(builder: (_) => StatefulAllBooksScreen());
       case '/allbooksprodavac':
