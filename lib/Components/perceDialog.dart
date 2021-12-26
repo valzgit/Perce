@@ -58,6 +58,7 @@ class _PerceDialogState extends State<PerceDialog> {
                               Row(
                                 children: [
                                   PerceCheckBox(
+                                    key: UniqueKey(),
                                     function: () {
                                       checkedRecommendedFriend.add(box.getAt(i).userName);
                                     },
