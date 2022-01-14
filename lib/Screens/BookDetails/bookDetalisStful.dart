@@ -34,7 +34,9 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
       height: 30,
     );
     double starsRate = 0;
+    var canComment = true;
     for (int i = 0; i < bookComments.userNames.length; ++i) {
+      if (bookComments.userNames[i] == loggedUser.userName) canComment = false;
       starsRate += bookComments.starsGiven[i];
       comments.add(Container(
         width: size.width * 3.0 / 5,
@@ -93,8 +95,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
     if (bookComments.userNames.length != 0) {
       starsRate /= bookComments.userNames.length;
       starsRate -= 1;
-    }
-    else{
+    } else {
       starsRate = -1;
     }
     List<Widget> starsList = [];
@@ -300,10 +301,7 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                           color3: Color(0xFF133069),
                           text: 'PREPORUČI',
                           function: () {
-                            showDialog(
-                              context: context,
-                              builder: (_) => PerceDialog()
-                            );
+                            showDialog(context: context, builder: (_) => PerceDialog());
                           },
                         ),
                       ],
@@ -356,22 +354,24 @@ class _BookDetailsPageState extends State<BookDetailsPage> {
                               SizedBox(
                                 width: 30,
                               ),
-                              PerceButton(
-                                color1: Color(0xFF136940),
-                                color2: Color(0xFF136940),
-                                color3: Color(0xFF136940),
-                                text: 'OCENI',
-                                function: () {
-                                  if (_formKey.currentState.validate()) {
-                                    bookComments.starsGiven.add(stars.clickedStarsCount());
-                                    bookComments.userNames.add(loggedUser.userName);
-                                    bookComments.comments.add(comment);
-                                    final commentBox = Boxes.getCommentsForBook();
-                                    commentBox.put(storedBook.bookUrl, bookComments);
-                                    setState(() {});
-                                  }
-                                },
-                              ),
+                              canComment
+                                  ? PerceButton(
+                                      color1: Color(0xFF136940),
+                                      color2: Color(0xFF136940),
+                                      color3: Color(0xFF136940),
+                                      text: 'OCENI',
+                                      function: () {
+                                        if (_formKey.currentState.validate()) {
+                                          bookComments.starsGiven.add(stars.clickedStarsCount());
+                                          bookComments.userNames.add(loggedUser.userName);
+                                          bookComments.comments.add(comment);
+                                          final commentBox = Boxes.getCommentsForBook();
+                                          commentBox.put(storedBook.bookUrl, bookComments);
+                                          setState(() {});
+                                        }
+                                      },
+                                    )
+                                  : PerceButton(color1: Color(0xFF343434), color2: Color(0xFF343434), color3: Color(0xFF343434), text: 'OCENI', function: () {}),
                             ],
                           )
                         ]),
